@@ -1,0 +1,54 @@
+<% layout('/layouts/boilerplate') -%>
+
+  <body>
+    <div class="row justify-content-center container mt-4">
+      <div class="card col-lg-7 col-md-7 mb-3">
+        <img src="<%= list.image.url %>" class="card-img-top" alt="Listing Image" id="showandeditimg">
+        <div class="card-body">
+          <h3 class="card-title mb-3">
+            <%= list.title %>
+          </h3>
+          <p class="card-text">
+            <%= list.description %>
+          </p>
+          <h5 class="price">Price: &#8377;<%= list.price.toLocaleString("en-IN") %> <span>/night</span>
+          </h5>
+          <p class="location">Location: <%= list.location %>, <%= list.country %>
+          </p>
+          <div class="card-btns mt-4">
+            <a class="btn btn-primary" href="#" role="button">Rent Now</a>
+          </div>
+
+          <ul class="details-list list-unstyled mt-3">
+            <li>🏠 Type: Apartment / House / PG (use your DB field)</li>
+            <li>🛏️ Bedrooms: 2</li>
+            <li>🛁 Bathrooms: 1</li>
+            <li>📏 Area: 1200 sq ft</li>
+          </ul>
+
+          <div class="d-flex flex-column flex-md-row justify-content-between gap-2 mt-3">
+            
+            <div class="d-flex w-md-50 gap-2">
+              <form action="/listings/<%=list._id%>/edit" method="get" class="w-50">
+                <button type="submit" class="btn btn-outline-warning w-100">Edit</button>
+              </form>
+
+              <form action="/listings/<%=list._id%>?_method=DELETE" method="post"
+                onsubmit="return confirm('Are you Sure you want to Delete?')" class="w-50">
+                <button type="submit" class="btn btn-outline-danger w-md-100">Delete</button>
+              </form>
+            </div>
+
+        
+            <div class="mt-2 mt-md-0">
+              <a class="btn btn-outline-secondary w-100" href="/listings" role="button">
+                Back to Listings
+              </a>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </body>

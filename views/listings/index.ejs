@@ -1,0 +1,99 @@
+<% layout('/layouts/boilerplate') -%>
+
+  <body>
+    <section id="icons">
+      <div class="container mt-4">
+        <div class="row text-center g-1">
+          <div class="col-4 col-sm-4 col-md-3 col-lg-1">
+            <a href="#" class="text-decoration-none d-block py-2">
+              <i class="fas fa-fire fa-1 mb-2"></i>
+              <div>Trending</div>
+            </a>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+            <a href="#" class="text-decoration-none  d-block py-2">
+              <i class="fas fa-home fa-1 mb-2"></i>
+              <p>Rooms</p>
+            </a>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+            <a href="#" class="text-decoration-none  d-block py-2">
+              <i class="fas fa-umbrella-beach fa-1 mb-2"></i>
+              <div>Beachfront</div>
+            </a>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+            <a href="#" class="text-decoration-none  d-block py-2">
+              <i class="fas fa-swimmer fa-1 mb-2"></i>
+              <div>Pools</div>
+            </a>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+            <a href="#" class="text-decoration-none  d-block py-2">
+              <i class="fas fa-chess-rook fa-1 mb-2"></i>
+              <div>Castles</div>
+            </a>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+            <a href="#" class="text-decoration-none  d-block py-2">
+              <i class="fas fa-ship fa-1 mb-2"></i>
+              <div>Boat House</div>
+            </a>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+            <a href="#" class="text-decoration-none  d-block py-2">
+              <i class="fas fa-golf-ball fa-1 mb-2"></i>
+              <div>Golfing</div>
+            </a>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+            <a href="#" class="text-decoration-none  d-block py-2">
+              <i class="fas fa-mountain fa-1 mb-2"></i>
+              <div>Iconic Cities</div>
+            </a>
+          </div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+            <a href="#" class="text-decoration-none  d-block py-2">
+              <i class="fas fa-landmark fa-1 mb-2"></i>
+              <div>Palaces</div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+          <h2 class="header">All listings</h2>
+          <form action="/listings/new" method="get"><button type="submit" class="btn btn-danger">Create New
+              Post</button>
+          </form>
+        </div>
+        <div class="row">
+          <% for(let list of all_listings){ %>
+            <div class=" col-sm-12 col-md-4 col-lg-3 mb-4 d-flex">
+              <div class="card w-100 text-wrap indexlist ">
+                <img src="<%= list.image.url %>" class="card-img-top" alt="..."
+                  onclick="window.location.href='/listings/<%= list._id %>'">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <%= list.title %>
+                  </h5>
+                  <h6 class="price">Price: &#8377; <%= list.price.toLocaleString("en-IN") %>/night
+                  </h6>
+                  <p class="location">Location: <%= list.location %>, <%= list.country %>
+                  </p>
+                  <div class="btns">
+                    <button type="button" class="btn btn-danger btn-sm">Rent</button>
+                    <a href="/listings/<%=list._id%>" class="btn btn-outline-danger btn-sm">View</a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <% } %>
+        </div>
+      </div>
+    </section>
+
+  </body>

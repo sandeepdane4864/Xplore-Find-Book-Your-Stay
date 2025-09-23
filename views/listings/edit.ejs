@@ -1,0 +1,64 @@
+<% layout('/layouts/boilerplate') -%>
+
+    <body>
+        <div class="card col-lg-5 col-md-7 offset-md-3 mb-4 mt-3">
+            <div class="card-header">
+                <h3 class="mb-2">Edit Listing</h3>
+            </div>
+            <div class="card-body">
+                <img src="<%= list.image.url %>" class="card-img-top" alt="Listing Image" id="showandeditimg">
+                <br><br>
+
+                <form action="/listings/<%= list._id %>?_method=PUT" method="post"
+                    onsubmit="return confirm('Are you sure you want to update?')">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" value="<%= list.title %>"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="4"
+                            required><%= list.description %></textarea>
+                    </div>
+
+                    
+                    <div class="row">
+                        <div class="col-lg-6 mb-3">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="price" name="price" value="<%= list.price %>"
+                                min="1" step="1" required>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label for="location" class="form-label">Location</label>
+                            <input type="text" class="form-control" id="location" name="location"
+                                value="<%= list.location %>" required>
+                        </div>
+                    </div>
+
+                  
+                    <div class="mb-3">
+                        <label for="country" class="form-label">Country</label>
+                        <input type="text" class="form-control" id="country" name="country" value="<%= list.country %>"
+                            required>
+                    </div>
+
+         
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image URL</label>
+                        <input type="text" class="form-control" id="image" name="image" value="<%= list.image.url %>">
+                    </div>
+
+               
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-danger">Update</button>
+                        <a class="btn btn-secondary" href="/listings" role="button">Back to Listings</a>
+                    </div>
+
+                </form>
+            
+
+            </div>
+        </div>
+    </body>
