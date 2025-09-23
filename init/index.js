@@ -14,11 +14,11 @@ main().then(
      err => console.log("Error in DB Connection", err)
 );
 
-// const initdb = async ()=>{
-//     await listing.deleteMany({});
-//     await listing.insertMany(initdata.data);
-//     console.log("data was Initialized");
-// }
+const initdblist = async ()=>{
+    await listing.deleteMany({});
+    await listing.insertMany(initdata.data);
+    console.log("data was Initialized");
+}
 
 const initdb = async ()=>{
     await usermodel.deleteMany({});
@@ -27,3 +27,4 @@ const initdb = async ()=>{
 }
 
 initdb();
+initdblist();

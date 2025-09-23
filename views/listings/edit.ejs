@@ -23,7 +23,30 @@
                             required><%= list.description %></textarea>
                     </div>
 
-                    
+                    <div class="mb-3">
+                        <label for="category" class="form-label">
+                            Category
+                        </label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Choose a category..." id="category"
+                                name="category" value="<%= list.category%>">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Categories
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#">Rooms</a></li>
+                                <li><a class="dropdown-item" href="#">Beachfront</a></li>
+                                <li><a class="dropdown-item" href="#">Pools</a></li>
+                                <li><a class="dropdown-item" href="#">Castles</a></li>
+                                <li><a class="dropdown-item" href="#">Boat House</a></li>
+                                <li><a class="dropdown-item" href="#">Golfing</a></li>
+                                <li><a class="dropdown-item" href="#">Iconic Cities</a></li>
+                                <li><a class="dropdown-item" href="#">Palaces</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-lg-6 mb-3">
                             <label for="price" class="form-label">Price</label>
@@ -37,28 +60,36 @@
                         </div>
                     </div>
 
-                  
+
                     <div class="mb-3">
                         <label for="country" class="form-label">Country</label>
                         <input type="text" class="form-control" id="country" name="country" value="<%= list.country %>"
                             required>
                     </div>
 
-         
                     <div class="mb-3">
                         <label for="image" class="form-label">Image URL</label>
                         <input type="text" class="form-control" id="image" name="image" value="<%= list.image.url %>">
                     </div>
 
-               
+
                     <div class="d-flex justify-content-between">
                         <button type="submit" class="btn btn-danger">Update</button>
                         <a class="btn btn-secondary" href="/listings" role="button">Back to Listings</a>
                     </div>
 
                 </form>
-            
+
 
             </div>
         </div>
+        <script>
+            const categoryInput = document.getElementById('category');
+            document.querySelectorAll('.dropdown-item').forEach(item => {
+                item.addEventListener('click', function (e) {
+                    e.preventDefault(); // stop default link behavior
+                    categoryInput.value = this.textContent; // set input value
+                });
+            });
+        </script>
     </body>

@@ -43,7 +43,7 @@ app.get('/listings/new', (req, res) => {
 app.post('/listings', async (req, res) => {
     const { title, description, price, location, country, image } = req.body;
     let data = new listing({
-        title, description, price, location, country, image: { url: image }
+        title, description,category, price, location, country, image: { url: image }
     });
     await data.save();
     res.redirect('/listings');
@@ -64,12 +64,13 @@ app.get('/listings/:id/edit', async (req, res) => {
 // edit and save it in db
 app.put('/listings/:id', async (req, res) => {
     let { id } = req.params;
-    const { title, description, price, location, country, image } = req.body;
+    const { title, description, price, location, country, image, category } = req.body;
 
     let list = await listing.findByIdAndUpdate(id,
         {
             title,
             description,
+            category,
             price,
             location,
             country,

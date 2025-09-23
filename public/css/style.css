@@ -80,6 +80,21 @@
      .card-img-top {
          height: 250px;
      }
+   
+ }
+ @media (max-width:995px){
+      .Profile-pic{
+        display: none
+     }
+ }
+
+ @media (max-width:1050px){
+    .Profile-pic{
+        margin-right: 15px !important;
+    }
+    .profile-toggle{
+    display: block !important;
+}
  }
 
  #socialmedia i {
@@ -95,7 +110,7 @@
  }
 
  .searchbtn{
-    margin-right: 100px;
+    margin-right: 20px;
  }
  #showandeditimg{
     height: 250px;
@@ -112,9 +127,7 @@
 
  @media(max-width:575px){
  #icons {
-    display: none;
-
-    
+    display: none; 
  }
  .logo{
      margin-left:5px;
@@ -124,3 +137,9 @@
      font-size: 1.3rem;
  }
  }
+.Profile-pic{
+    margin-right: 80px;
+}
+.profile-toggle{
+    display: none;
+}
