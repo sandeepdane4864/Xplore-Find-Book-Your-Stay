@@ -1,3 +1,4 @@
+//npm packages
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -5,7 +6,7 @@ const mongoose = require('mongoose');
 const listing = require("./models/listing");
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
-
+//momgodb connection
 const mongo_URL = "mongodb://127.0.0.1:27017/xplore"
 async function main() {
     await mongoose.connect(mongo_URL);
@@ -17,6 +18,7 @@ main().then(
         err => console.log("Error in DB Connection", err)
     );
 const port = 8080;
+//middlewares 
 app.engine('ejs', ejsMate);
 app.set('view engine', "EJS");
 app.set("views", path.join(__dirname, 'views'));
@@ -89,6 +91,8 @@ app.delete('/listings/:id', async (req, res) => {
     res.redirect('/listings');
 });
 
+
+// listening route
 app.listen(port, (req, res) => {
     console.log(`App is listening to ${port}`);
 });
