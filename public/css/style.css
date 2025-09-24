@@ -139,6 +139,10 @@
  }
 .Profile-pic{
     margin-right: 80px;
+    
+}
+.Profile-pic img{
+    object-fit: cover;
 }
 .profile-toggle{
     display: none;
