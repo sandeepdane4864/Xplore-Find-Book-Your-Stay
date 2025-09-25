@@ -6,6 +6,11 @@ const mongoose = require('mongoose');
 const listing = require("./models/listing");
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
+
+//require errors utils
+const wrapAsync = require('./utils/wrapAsync');
+const ExpressError = require('./utils/ExpressError');
+
 //momgodb connection
 const mongo_URL = "mongodb://127.0.0.1:27017/xplore"
 async function main() {
@@ -14,10 +19,11 @@ async function main() {
 main().then(
     () => console.log('Connected to DB successfully..')
 )
-.catch(
+    .catch(
         err => console.log("Error in DB Connection", err)
     );
 const port = 8080;
+
 //middlewares 
 app.engine('ejs', ejsMate);
 app.set('view engine', "EJS");
@@ -31,38 +37,56 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
     res.send('this is root');
 });
+// route to show all listings
 
-app.get('/listings', async (req, res) => {
+app.get('/listings', wrapAsync(
+    async (req, res) => {
     const all_listings = await listing.find({})
     res.render('listings/index.ejs', { all_listings })
-})
+}
+));
 
 // go to new form route 
 app.get('/listings/new', (req, res) => {
     res.render('listings/new.ejs');
 })
 //add new list to listing  route 
-app.post('/listings', async (req, res) => {
-    const { title, description, price, location, country, image } = req.body;
-    let data = new listing({
-        title, description,category, price, location, country, image: { url: image }
-    });
-    await data.save();
-    res.redirect('/listings');
+app.post('/listings', wrapAsync(async (req, res,next) => {
 
-})
+        const { title, description, price, location, country, image } = req.body;
+        let data = new listing({
+            title, description, category, price, location, country, image: { url: image }
+        });
+        await data.save();
+        if(!data){
+            return next(new ExpressError(404,"Something went Wrong with data"));
+        }
+
+        res.redirect('/listings');
+    }
+    
+));
 // show route to detailed page
-app.get('/listings/:id', async (req, res) => {
+app.get('/listings/:id', wrapAsync(
+    async (req, res) => {
     let { id } = req.params;
     let list = await listing.findById(id);
+     if (!list) throw new ExpressError(404, "Listing not found");
     res.render('listings/show.ejs', { list });
-});
+}
+));
 //edit form route
-app.get('/listings/:id/edit', async (req, res) => {
+app.get('/listings/:id/edit', wrapAsync(
+    async (req, res) => {
     let { id } = req.params;
     let list = await listing.findById(id);
+    // if(!list) {
+    //     return next(new ExpressError(404, "Listing not found"));
+    // }
+    if (!list) throw new ExpressError(404, "Listing not found");
     res.render('listings/edit.ejs', { list });
-});
+}
+));
 // edit and save it in db
 app.put('/listings/:id', async (req, res) => {
     let { id } = req.params;
@@ -91,6 +115,17 @@ app.delete('/listings/:id', async (req, res) => {
     res.redirect('/listings');
 });
 
+
+// Catch-all route
+app.use((req, res, next) => {
+    next(new ExpressError(404, "Page not found 😢"));
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+    const { statusCode = 500, message = "Something went wrong" } = err;
+    res.status(statusCode).send("Error message : " + message);
+});
 
 // listening route
 app.listen(port, (req, res) => {

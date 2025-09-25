@@ -1,7 +1,7 @@
 <% layout('/layouts/boilerplate') -%>
 
     <body>
-        <div class="card col-lg-5 col-md-7 offset-md-3 mb-4 mt-3">
+        <div class="card col-lg-5 col-md-7 offset-3 mb-4 mt-3">
             <div class="card-header">
                 <h3 class="mb-2">Edit Listing</h3>
             </div>
@@ -10,7 +10,7 @@
                 <br><br>
 
                 <form action="/listings/<%= list._id %>?_method=PUT" method="post"
-                    onsubmit="return confirm('Are you sure you want to update?')">
+                    onsubmit="return confirm('Are you sure you want to update?')" novalidate class="needs-validation">
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
                         <input type="text" class="form-control" id="title" name="title" value="<%= list.title %>"

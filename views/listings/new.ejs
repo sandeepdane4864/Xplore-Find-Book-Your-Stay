@@ -9,7 +9,7 @@
                             <h3 class="mb-0">Create New Listing</h3>
                         </div>
                         <div class="card-body">
-                            <form action="/listings" method="POST">
+                            <form action="/listings" method="POST" novalidate class="needs-validation">
 
                                 <div class="mb-3">
                                     <label for="title" class="form-label">Title</label>
@@ -22,28 +22,27 @@
                                     <textarea class="form-control" id="description" name="description" rows="3"
                                         placeholder="Enter listing description" required></textarea>
                                 </div>
-                                
+                                <div>
+
+                                </div>
+
                                 <div class="mb-3">
-                                    <label for="category" class="form-label">
+                                    <label for="category" class="form-label" novalidate class="needs-validation">
                                         Category
                                     </label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Choose a category..."
-                                            id="category" name="category">
-                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            Categories
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a class="dropdown-item" href="#">Rooms</a></li>
-                                            <li><a class="dropdown-item" href="#">Beachfront</a></li>
-                                            <li><a class="dropdown-item" href="#">Pools</a></li>
-                                            <li><a class="dropdown-item" href="#">Castles</a></li>
-                                            <li><a class="dropdown-item" href="#">Boat House</a></li>
-                                            <li><a class="dropdown-item" href="#">Golfing</a></li>
-                                            <li><a class="dropdown-item" href="#">Iconic Cities</a></li>
-                                            <li><a class="dropdown-item" href="#">Palaces</a></li>
-                                        </ul>
+                                    <select class="form-select" id="category" name="category" required>
+                                        <option selected value="">Choose a category...</option>
+                                        <option>Rooms</option>
+                                        <option>Beachfront</option>
+                                        <option>Pools</option>
+                                        <option>Boat House</option>
+                                        <option>Castles</option>
+                                        <option>Golfing</option>
+                                        <option>Iconic Cities</option>
+                                        <option>Palaces</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select a valid state.
                                     </div>
                                 </div>
 
@@ -76,7 +75,7 @@
 
 
                                 <div class="d-flex justify-content-between mt-4">
-                                    <form><button type="submit" class="btn btn-danger">Add</button></form>
+                                    <button type="submit" class="btn btn-danger">Add</button>
                                     <a href="/listings" class="btn btn-secondary">Cancel</a>
                                 </div>
                             </form>
@@ -85,13 +84,5 @@
                 </div>
             </div>
         </div>
-        <script>
-            const categoryInput = document.getElementById('category');
-            document.querySelectorAll('.dropdown-item').forEach(item => {
-                item.addEventListener('click', function (e) {
-                    e.preventDefault(); // stop default link behavior
-                    categoryInput.value = this.textContent; // set input value
-                });
-            });
-        </script>
+
     </body>
