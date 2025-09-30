@@ -82,7 +82,7 @@
      }
    
  }
- @media (max-width:995px){
+ @media (max-width:991px){
       .Profile-pic{
         display: none
      }
@@ -92,6 +92,9 @@
     .Profile-pic{
         margin-right: 15px !important;
     }
+
+ }
+ @media(max-width:991px){
     .profile-toggle{
     display: block !important;
 }
@@ -138,8 +141,7 @@
  }
  }
 .Profile-pic{
-    margin-right: 80px;
-    
+    margin-right: 80px;  
 }
 .Profile-pic img{
     object-fit: cover;

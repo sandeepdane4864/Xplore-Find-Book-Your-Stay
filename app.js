@@ -88,7 +88,8 @@ app.get('/listings/:id/edit', wrapAsync(
 }
 ));
 // edit and save it in db
-app.put('/listings/:id', async (req, res) => {
+app.put('/listings/:id', wrapAsync(
+    async (req, res) => {
     let { id } = req.params;
     const { title, description, price, location, country, image, category } = req.body;
 
@@ -104,16 +105,20 @@ app.put('/listings/:id', async (req, res) => {
         }, { new: true });
     console.log("updated Successfully", list);
     res.redirect(`/listings/${id}`);
-});
+}
+));
 
 //route to delete a liat from 
 
-app.delete('/listings/:id', async (req, res) => {
+app.delete('/listings/:id', wrapAsync(
+    async (req, res) => {
     let { id } = req.params;
     let del_list = await listing.findByIdAndDelete(id);
     console.log("DElETED LIST Successfully", del_list);
     res.redirect('/listings');
-});
+    }
+)
+);
 
 
 // Catch-all route
