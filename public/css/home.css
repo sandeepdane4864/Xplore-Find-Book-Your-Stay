@@ -1,0 +1,94 @@
+/* ===== HERO SECTION ===== */
+
+.lux-hero{
+    height: calc(100vh - 70px);
+    margin-top:-10px;                 /* removes tiny gap under navbar */
+    
+    background:
+        linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+        url("https://images.unsplash.com/photo-1501785888041-af3ef285b470");
+    
+    background-size: cover;
+    background-position: center -80px;  /* 🔥 move image upward */
+    background-repeat: no-repeat;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+
+/* content wrapper */
+.hero-content{
+    max-width:900px;
+    padding:20px;
+}
+
+/* small tagline text */
+.small-tag{
+    letter-spacing:4px;
+    font-size:14px;
+    margin-bottom:20px;
+    opacity:0.9;
+}
+
+/* BIG heading */
+.hero-title{
+    font-size:85px;
+    font-weight:700;
+    letter-spacing:6px;
+    margin-bottom:25px;
+}
+
+/* subtitle */
+.hero-sub{
+    font-size:22px;
+    margin-bottom:40px;
+    opacity:0.95;
+}
+
+/* CTA button (match your red theme) */
+.hero-btn{
+    background:#dc3545;
+    color:white;
+    padding:12px 40px;
+    font-size:18px;
+    border-radius:50px;
+    text-decoration:none;
+    transition: all 0.3s ease;
+    box-shadow:0 8px 25px rgba(0,0,0,0.3);
+}
+
+.hero-btn:hover{
+    background:#c82333;
+    transform:scale(1.02);
+    color:white;
+    font-size:20px;
+}
+
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width:992px){
+    .hero-title{
+        font-size:55px;
+        letter-spacing:3px;
+    }
+    .hero-sub{
+        font-size:18px;
+    }
+}
+
+@media (max-width:576px){
+    .hero-title{
+        font-size:38px;
+        letter-spacing:2px;
+    }
+    .small-tag{
+        font-size:12px;
+    }
+    .hero-btn{
+        font-size:16px;
+        padding:12px 30px;
+    }
+}

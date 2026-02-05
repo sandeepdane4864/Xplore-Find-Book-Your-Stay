@@ -60,7 +60,7 @@
      font-weight: bold;
      margin-left:5px;
      margin-right: 45px;
-     font-size: 25px; 
+     font-size: 27px; 
  }
  .navbar-nav{
     font-size: 18px;
@@ -99,7 +99,12 @@
     display: block !important;
 }
  }
+ @media(max-width:620px){
+    .navbar-brand {
+        padding-left: 30px;
 
+    }
+ }
  #socialmedia i {
      font-size: 25px;
      margin-right: 20px;

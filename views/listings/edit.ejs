@@ -1,95 +1,143 @@
 <% layout('/layouts/boilerplate') -%>
 
-    <body>
-        <div class="card col-lg-5 col-md-7 offset-3 mb-4 mt-3">
-            <div class="card-header">
-                <h3 class="mb-2">Edit Listing</h3>
-            </div>
-            <div class="card-body">
-                <img src="<%= list.image.url %>" class="card-img-top" alt="Listing Image" id="showandeditimg">
-                <br><br>
+<body>
 
-                <form action="/listings/<%= list._id %>?_method=PUT" method="post"
-                    onsubmit="return confirm('Are you sure you want to update?')" novalidate class="needs-validation">
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="title" name="title" value="<%= list.title %>"
-                            required>
-                    </div>
+<div class="container lists">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-11 col-md-9 col-lg-6 col-xl-5">
 
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" name="description" rows="4"
-                            required><%= list.description %></textarea>
-                    </div>
+      <div class="card mb-4 mt-3">
 
-                    <div class="mb-3">
-                        <label for="category" class="form-label">
-                            Category
-                        </label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Choose a category..." id="category"
-                                name="category" value="<%= list.category%>">
-                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Categories
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#">Rooms</a></li>
-                                <li><a class="dropdown-item" href="#">Beachfront</a></li>
-                                <li><a class="dropdown-item" href="#">Pools</a></li>
-                                <li><a class="dropdown-item" href="#">Castles</a></li>
-                                <li><a class="dropdown-item" href="#">Boat House</a></li>
-                                <li><a class="dropdown-item" href="#">Golfing</a></li>
-                                <li><a class="dropdown-item" href="#">Iconic Cities</a></li>
-                                <li><a class="dropdown-item" href="#">Palaces</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-6 mb-3">
-                            <label for="price" class="form-label">Price</label>
-                            <input type="number" class="form-control" id="price" name="price" value="<%= list.price %>"
-                                min="1" step="1" required>
-                        </div>
-                        <div class="col-lg-6 mb-3">
-                            <label for="location" class="form-label">Location</label>
-                            <input type="text" class="form-control" id="location" name="location"
-                                value="<%= list.location %>" required>
-                        </div>
-                    </div>
-
-
-                    <div class="mb-3">
-                        <label for="country" class="form-label">Country</label>
-                        <input type="text" class="form-control" id="country" name="country" value="<%= list.country %>"
-                            required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Image URL</label>
-                        <input type="text" class="form-control" id="image" name="image" value="<%= list.image.url %>">
-                    </div>
-
-
-                    <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn btn-danger">Update</button>
-                        <a class="btn btn-secondary" href="/listings" role="button">Back to Listings</a>
-                    </div>
-
-                </form>
-
-
-            </div>
+        <div class="card-header">
+            <h3 class="mb-2">Edit Listing</h3>
         </div>
-        <script>
-            const categoryInput = document.getElementById('category');
-            document.querySelectorAll('.dropdown-item').forEach(item => {
-                item.addEventListener('click', function (e) {
-                    e.preventDefault(); // stop default link behavior
-                    categoryInput.value = this.textContent; // set input value
-                });
-            });
-        </script>
-    </body>
+
+        <div class="card-body">
+
+            <!-- IMAGE -->
+            <img src="<%= list.image.url %>" 
+                 class="card-img-top mb-3" 
+                 alt="Listing Image" 
+                 id="showandeditimg">
+
+            <!-- FORM -->
+            <form action="/listings/<%= list._id %>?_method=PUT" 
+                  method="post"
+                  onsubmit="return confirm('Are you sure you want to update?')" 
+                  novalidate class="needs-validation">
+
+                <!-- TITLE -->
+                <div class="mb-3">
+                    <label class="form-label">Title</label>
+                    <input type="text" 
+                           class="form-control" 
+                           name="title" 
+                           value="<%= list.title %>" required>
+                </div>
+
+                <!-- DESCRIPTION -->
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" 
+                              name="description" 
+                              rows="4" required><%= list.description %></textarea>
+                </div>
+
+                <!-- CATEGORY DROPDOWN -->
+                <div class="mb-3">
+                    <label class="form-label">Category</label>
+
+                    <div class="input-group">
+                        <input type="text" 
+                               class="form-control" 
+                               id="category"
+                               name="category" 
+                               placeholder="Choose a category..."
+                               value="<%= list.category %>">
+
+                        <button class="btn btn-outline-secondary dropdown-toggle"
+                                type="button"
+                                data-bs-toggle="dropdown">
+                            Categories
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Rooms</a></li>
+                            <li><a class="dropdown-item" href="#">Beachfront</a></li>
+                            <li><a class="dropdown-item" href="#">Pools</a></li>
+                            <li><a class="dropdown-item" href="#">Castles</a></li>
+                            <li><a class="dropdown-item" href="#">Boat House</a></li>
+                            <li><a class="dropdown-item" href="#">Golfing</a></li>
+                            <li><a class="dropdown-item" href="#">Iconic Cities</a></li>
+                            <li><a class="dropdown-item" href="#">Palaces</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- PRICE + LOCATION -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Price</label>
+                        <input type="number" 
+                               class="form-control" 
+                               name="price" 
+                               value="<%= list.price %>" 
+                               min="1" required>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Location</label>
+                        <input type="text" 
+                               class="form-control" 
+                               name="location" 
+                               value="<%= list.location %>" required>
+                    </div>
+                </div>
+
+                <!-- COUNTRY -->
+                <div class="mb-3">
+                    <label class="form-label">Country</label>
+                    <input type="text" 
+                           class="form-control" 
+                           name="country" 
+                           value="<%= list.country %>" required>
+                </div>
+
+                <!-- IMAGE URL -->
+                <div class="mb-3">
+                    <label class="form-label">Image URL</label>
+                    <input type="text" 
+                           class="form-control" 
+                           id="image"
+                           name="image" 
+                           value="<%= list.image.url %>">
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-danger">Update</button>
+                    <a href="/listings" class="btn btn-secondary">Back to Listings</a>
+                </div>
+
+            </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- CATEGORY SELECT SCRIPT -->
+<script>
+    const categoryInput = document.getElementById('category');
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+            categoryInput.value = this.textContent;
+        });
+    });
+</script>
+
+</body>

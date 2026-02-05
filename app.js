@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const listing = require("./models/listing");
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
+const {listingSchema} = require('./schema.js')
 
 //require errors utils
 const wrapAsync = require('./utils/wrapAsync');
@@ -34,8 +35,19 @@ app.use(methodOverride("_method"));
 app.use(express.static('public'));
 
 
+module.exports.validateListing = (req, res, next) => {
+    const { error } = listingSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(", ");
+        throw new ExpressError(400, msg);
+    } else {
+        next();
+    }
+};
+
+
 app.get('/', (req, res) => {
-    res.send('this is root');
+    res.render('listings/home.ejs');
 });
 // route to show all listings
 
@@ -51,27 +63,24 @@ app.get('/listings/new', (req, res) => {
     res.render('listings/new.ejs');
 })
 //add new list to listing  route 
-app.post('/listings', wrapAsync(async (req, res,next) => {
+app.post('/listings', wrapAsync(async (req, res, next) => {
+   
+    const { title, description, category, price, location, country, image } = req.body;
+   
+    let data = new listing({
+        title, description, category, price, location, country, image: { url: image }
+    });
 
-        const { title, description, price, location, country, image } = req.body;
-        let data = new listing({
-            title, description, category, price, location, country, image: { url: image }
-        });
-        await data.save();
-        if(!data){
-            return next(new ExpressError(404,"Something went Wrong with data"));
-        }
+    await data.save();
+    res.redirect('/listings');
+}));
 
-        res.redirect('/listings');
-    }
-    
-));
 // show route to detailed page
 app.get('/listings/:id', wrapAsync(
     async (req, res) => {
     let { id } = req.params;
     let list = await listing.findById(id);
-     if (!list) throw new ExpressError(404, "Listing not found");
+    if (!list) throw new ExpressError(404, "Listing not found");
     res.render('listings/show.ejs', { list });
 }
 ));
@@ -129,7 +138,8 @@ app.use((req, res, next) => {
 // Error handler
 app.use((err, req, res, next) => {
     const { statusCode = 500, message = "Something went wrong" } = err;
-    res.status(statusCode).send("Error message : " + message);
+    // res.status(statusCode).send("Error message : " + message);
+    res.render('error.ejs',{statusCode,message});
 });
 
 // listening route
