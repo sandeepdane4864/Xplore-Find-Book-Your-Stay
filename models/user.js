@@ -1,9 +1,4 @@
 const mongoose = require('mongoose');
-const mongo_URL = "mongodb://127.0.0.1:27017/xplore"
-async function main() {
-    await mongoose.connect(mongo_URL);
-};
-main();
 
 const userSchema = new mongoose.Schema({
     username : {
