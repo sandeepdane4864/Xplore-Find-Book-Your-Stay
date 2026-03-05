@@ -1,4 +1,4 @@
 node_modules/
-.env/
-navbarold.ejs/
-oldshow.ejs/
+.env
+navbarold.ejs
+oldshow.ejs
