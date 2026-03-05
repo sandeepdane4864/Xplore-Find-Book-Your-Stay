@@ -103,7 +103,9 @@
                   <p class="location">Location: <%= list.location %>, <%= list.country %>
                   </p>
                   <div class="btns">
-                    <button type="button" class="btn btn-danger btn-sm">Rent</button>
+                    <form action="/listings/<%=list._id%>" method="get" class="d-inline">
+                      <button type="submit" class="btn btn-danger btn-sm">Rent</button>
+                    </form>
                     <a href="/listings/<%=list._id%>" class="btn btn-outline-danger btn-sm">View</a>
                   </div>
                 </div>

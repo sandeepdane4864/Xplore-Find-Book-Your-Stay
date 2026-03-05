@@ -4,34 +4,32 @@
         <div class="container mt-3">
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-md-8 mb-3">
+
                     <div class="card shadow-sm">
                         <div class="card-header">
                             <h3 class="mb-0">Create New Listing</h3>
                         </div>
+
                         <div class="card-body">
-                            <form action="/listings" method="POST" novalidate class="needs-validation">
+
+                            <form action="/listings" method="POST" enctype="multipart/form-data" novalidate
+                                class="needs-validation">
 
                                 <div class="mb-3">
                                     <label for="title" class="form-label">Title</label>
-                                    <input type="text" class="form-control" id="title" name="title"
-                                        placeholder="Enter listing title" required>
+                                    <input type="text" class="form-control" id="title" name="listing[title]" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="description" class="form-label">Description</label>
-                                    <textarea class="form-control" id="description" name="description" rows="3"
-                                        placeholder="Enter listing description" required></textarea>
-                                </div>
-                                <div>
-
+                                    <textarea class="form-control" id="description" name="listing[description]" rows="3"
+                                        required></textarea>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="category" class="form-label" novalidate class="needs-validation">
-                                        Category
-                                    </label>
-                                    <select class="form-select" id="category" name="category" required>
-                                        <option selected value="">Choose a category...</option>
+                                    <label for="category" class="form-label">Category</label>
+                                    <select class="form-select" id="category" name="listing[category]" required>
+                                        <option value="">Choose a category...</option>
                                         <option>Rooms</option>
                                         <option>Beachfront</option>
                                         <option>Pools</option>
@@ -41,48 +39,46 @@
                                         <option>Iconic Cities</option>
                                         <option>Palaces</option>
                                     </select>
-                                    <div class="invalid-feedback">
-                                        Please select a valid state.
-                                    </div>
                                 </div>
 
-                                <div class="row col-md">
+                                <div class="row">
+
                                     <div class="col-md-4 mb-3">
                                         <label for="price" class="form-label">Price</label>
-                                        <input type="number" class="form-control" id="price" name="price"
-                                            placeholder="Enter price" required>
+                                        <input type="number" class="form-control" id="price" name="listing[price]"
+                                            required>
                                     </div>
-
 
                                     <div class="col-md-8 mb-3">
                                         <label for="location" class="form-label">Location</label>
-                                        <input type="text" class="form-control" id="location" name="location"
-                                            placeholder="Enter location" required>
+                                        <input type="text" class="form-control" id="location" name="listing[location]"
+                                            required>
                                     </div>
+
                                 </div>
+
                                 <div class="mb-3">
                                     <label for="country" class="form-label">Country</label>
-                                    <input type="text" class="form-control" id="country" name="country"
-                                        placeholder="Enter country" required>
+                                    <input type="text" class="form-control" id="country" name="listing[country]"
+                                        required>
                                 </div>
-
 
                                 <div class="mb-3">
-                                    <label for="image" class="form-label">Image URL</label>
-                                    <input type="text" class="form-control" id="image" name="image"
-                                        placeholder="Enter image URL">
+                                    // changes here for file upload are type and name attribute. enctype is set in the form tag
+                                    <label for="image" class="form-label">Upload Image</label>
+                                    <input type="file" class="form-control" id="image" name="image">
                                 </div>
-
 
                                 <div class="d-flex justify-content-between mt-4">
                                     <button type="submit" class="btn btn-danger">Add</button>
                                     <a href="/listings" class="btn btn-secondary">Cancel</a>
                                 </div>
+
                             </form>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </body>

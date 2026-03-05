@@ -1,0 +1,52 @@
+<% layout('/layouts/boilerplate') -%>
+
+  <body>
+
+    <div class="container lists">
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-11 col-md-8 col-lg-6 col-xl-5 mb-5 mt-4">
+
+          <div class="card mb-4 mt-4 shadow-sm">
+
+            <div class="card-header">
+              <h3 class="mb-0">Login</h3>
+            </div>
+
+            <div class="card-body">
+
+              <form action="/login" method="POST" novalidate class="needs-validation" >
+
+                <!-- EMAIL -->
+                <div class="mb-3">
+                  <label class="form-label">Email</label>
+                  <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+
+                <!-- PASSWORD -->
+                <div class="mb-3">
+                  <label class="form-label">Password</label>
+                  <input type="password" name="password" class="form-control" placeholder="Enter your password"
+                    required>
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="d-flex justify-content-between align-items-center">
+                  <button type="submit" class="btn btn-danger">
+                    Login
+                  </button>
+
+                  <a href="/register" class="btn btn-outline-secondary">
+                    Create Account
+                  </a>
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </body>

@@ -1,0 +1,78 @@
+<section>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom fixed-top">
+    <div class="container-fluid">
+      <a href="/">
+        <img src="/images/logo1.png" alt="logo" height="50" class="logo">
+      </a>
+      <a class="navbar-brand" href="/">Xplore</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-1">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/listings">All Listings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/listings/new">Add New</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+           <li class="nav-item profile-toggle">
+            <a class="nav-link" href="">Profile</a>
+          </li>
+           <li class="nav-item profile-toggle">
+            <a class="nav-link" href="">Settings</a>
+          </li>
+           <li class="nav-item profile-toggle">
+            <a class="nav-link text-danger" href="#">Logout</a>
+          </li>
+        </ul>
+        <div class="searchbtn">
+          <form class="d-flex mx-auto" role="search" style="max-width: 300px; width: 100%;">
+          <div class="input-group">
+            <input class="form-control rounded-pill ps-4" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-danger rounded-pill ms-2 px-3" type="submit">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+        </form>
+        </div>         
+        <div class="Profile-pic">
+          <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+              id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="https://i.pinimg.com/736x/db/83/8b/db838bc092299656764d9bf40f1b3d00.jpg" alt="profile" width="40" height="40" class="p rounded-circle border border-2 border-danger"  >
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><a class="dropdown-item" href="#">Settings</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </nav>
+</section>

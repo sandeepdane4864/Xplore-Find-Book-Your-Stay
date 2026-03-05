@@ -154,3 +154,10 @@
 .profile-toggle{
     display: none;
 }
+
+.custom-error-img {
+  width: 100%;
+  max-width: 400px;   /* Max size on large screens */
+  min-width: 350px;   /* Minimum size */
+  height: auto;
+}

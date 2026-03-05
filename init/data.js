@@ -313,16 +313,19 @@ const sampleListings = [
   },
 ];
 
-const sampleUser =
-  {
-    username : "Sandeepdane",
+const sampleUser = {
+    username: "Sandeepdane",
     email: "abc@gmail.com",
-    password : "sandy123",
-    name : 'Sandeep Dane',
-    phone_no : 1234567890,
-    gender: "male",
-    DOB : "12-11-2004"
-  }
+    password: "sandy123",
+
+    firstName: "Sandeep",
+    lastName: "Dane",
+
+    phone_no: 1234567890,
+    gender: "Male", 
+    DOB: new Date("2004-11-12")
+};
+
 
 
 

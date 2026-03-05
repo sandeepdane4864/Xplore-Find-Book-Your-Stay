@@ -5,20 +5,35 @@
       <div class="card col-lg-7 col-md-7 mb-3">
         <img src="<%= list.image.url %>" class="card-img-top" alt="Listing Image" id="showandeditimg">
         <div class="card-body">
-          <h3 class="card-title mb-3">
-            <%= list.title %>
-          </h3>
+
+          <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+
+            <div>
+              <h3 class=" mb-2">
+                <%= list.title %>
+              </h3>
+              <p class="text-muted mb-1">
+                <i class="bi bi-geo-alt"></i>
+                <%= list.location %>, <%= list.country %>
+              </p>
+              <p class="badge bg-light text-dark px-3 py-2 rounded-pill mt-2 fw-semibold mb-1">
+                <%= list.category %>
+              </p>
+            </div>
+
+            <div class="text-end">
+              <h3 class="fw-bold text-danger">
+                ₹<%= list.price.toLocaleString("en-IN") %>
+              </h3>
+              <small class="text-muted">per night</small>
+            </div>
+
+          </div>
           <p class="card-text">
             <%= list.description %>
           </p>
-          <h5 class="price">Price: &#8377;<%= list.price.toLocaleString("en-IN") %> <span>/night</span>
-          </h5>
-          <p class="location">Location: <%= list.location %>, <%= list.country %>
-          </p>
-          <p class="category">Type: <%= list.category %>
-          </p>
           <div class="card-btns mt-4">
-            <a class="btn btn-primary" href="#" role="button">Rent Now</a>
+            <a class="btn btn-danger" href="#" role="button">Rent Now</a>
           </div>
 
           <ul class="details-list list-unstyled mt-3">
@@ -29,7 +44,7 @@
           </ul>
 
           <div class="d-flex flex-column flex-md-row justify-content-between gap-2 mt-3">
-            
+
             <div class="d-flex w-md-50 gap-2">
               <form action="/listings/<%=list._id%>/edit" method="get" class="w-50">
                 <button type="submit" class="btn btn-outline-warning w-100">Edit</button>
@@ -41,7 +56,7 @@
               </form>
             </div>
 
-        
+
             <div class="mt-2 mt-md-0">
               <a class="btn btn-outline-secondary w-100" href="/listings" role="button">
                 Back to Listings
@@ -49,8 +64,98 @@
             </div>
           </div>
 
-
         </div>
       </div>
-    </div>
+      <hr>
+      <!-- REVIEWS SECTION -->
+      <div class="mb-4">
+        <h3 class="fw-bold mb-4">Reviews</h3>
+
+        <!-- REVIEW FORM -->
+        <div class="card border-0 shadow-sm rounded-4 p-4 mb-5">
+          <form action="/listings/<%= list._id %>/reviews" method="POST">
+
+            <div class="row g-3">
+
+              <div class="col-md-3">
+                <label class="form-label fw-semibold">Rating</label>
+                <select name="review[rating]" class="form-select rounded-pill" required>
+                  <option value="" disabled selected>Select</option>
+                  <option value="1">1 ⭐</option>
+                  <option value="2">2 ⭐⭐</option>
+                  <option value="3">3 ⭐⭐⭐</option>
+                  <option value="4">4 ⭐⭐⭐⭐</option>
+                  <option value="5">5 ⭐⭐⭐⭐⭐</option>
+                </select>
+                <label class="form-label fw-semibold mt-2">Your Name</label>
+                <input type="text" name="review[author]" class="form-control rounded-pill" placeholder="Enter your name"
+                  required>
+              </div>
+
+              <div class="col-md-7">
+                <label class="form-label fw-semibold">Comment</label>
+                <textarea name="review[comment]" class="form-control rounded-4" rows="4"
+                  placeholder="Share your experience..." required></textarea>
+              </div>
+
+              <div class="col-md-2 d-grid align-items-end">
+                <button class="btn btn-danger rounded-pill shadow-sm">
+                  Post
+                </button>
+              </div>
+
+            </div>
+
+          </form>
+        </div>
+
+
+        <!-- REVIEWS GRID -->
+        <% if (list.reviews.length===0) { %>
+          <p class="text-muted">No reviews yet. Be the first to review!</p>
+          <% } else { %>
+
+            <div class="row">
+              <% list.reviews.forEach(review=> { %>
+
+                <div class="col-12 col-md-5 col-lg-3 mb-4">
+
+                  <div class="card border-0 shadow-sm rounded-4 h-100 review-card p-3 position-relative">
+
+                    <h6 class="fw-bold mb-1">
+                      <%= review.author || "Anonymous" %>
+                    </h6>
+
+                    <p class="text-muted small mb-1">
+                      <%= review.createdAt ? review.createdAt.toDateString() : "" %>
+                    </p>
+                    <hr class="my-2 opacity-50 mt-0 mb-3">
+                    <h6 class="card-subtitle mb-2 text-warning">
+                      <%= "⭐" .repeat(review.rating) %>
+                    </h6>
+
+                    <p class="mb-4">
+                      <%= review.comment %>
+                    </p>
+
+                    <!-- Bottom Right Delete Button -->
+                    <form action="/listings/<%= list._id %>/reviews/<%= review._id %>?_method=DELETE" method="post"
+                      onsubmit="return confirm('Are you sure you want to delete?')"
+                      class="position-absolute bottom-0 end-0 m-2">
+
+                      <button type="submit" class="btn btn-sm btn-outline-danger">
+                        Delete
+                      </button>
+                    </form>
+
+                  </div>
+
+                </div>
+
+                <% }) %>
+            </div>
+
+            <% } %>
+      </div>
+
   </body>
