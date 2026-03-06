@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const passportLocalMongoose = require('passport-local-mongoose');
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -56,5 +57,8 @@ const userSchema = new mongoose.Schema({
 userSchema.virtual("fullName").get(function () {
     return `${this.firstName} ${this.lastName}`;
 });
+
+// Plugin passport-local-mongoose adds salt and hash fields to store the hashed password and salt value.
+userSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("User", userSchema);

@@ -18,15 +18,15 @@ function validateUser(req, res, next) {
 }
 
 router.get("/login", (req, res) => {
-    res.render("listings/login.ejs");
+    res.render("users/login.ejs");
 });
 
 // Register page
-router.get("/register", (req, res) => {
-    res.render("listings/register.ejs");
+router.get("/signup", (req, res) => {
+    res.render("users/signup.ejs");
 });
 
-router.post("/register",upload.single("profilePicture"),
+router.post("/signup",upload.single("profilePicture"),
     wrapAsync(async (req, res) => {
 
         const newUser = new User(req.body.user);
@@ -39,7 +39,7 @@ router.post("/register",upload.single("profilePicture"),
         }
 
         await newUser.save();
-
+        req.flash("success", "Registered successfully! Please log in.");
         res.redirect("/login");
     })
 );

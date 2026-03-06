@@ -8,14 +8,31 @@ const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const flash = require("connect-flash");
+ 
+const sessionOptions = {
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookies :{
+        //difference btw expires and maxage is that expires sets an absolute expiration date for the cookie
+        // while maxage sets a relative expiration time from the moment the cookie is set.
+        expires : Date.now() + 1000 * 60 * 60 * 24 , // 1 day
+        maxage : 1000 * 60 * 60 * 24 , // 1 day,
+        httpOnly: true,
+    }
+}
 
+app.use(session(sessionOptions));
 app.use(cookieParser());
+app.use(flash()); 
 
-app.get("/setcookie", (req, res) => {
-    res.cookie("username", "john_doe", { maxAge: 900000, httpOnly: true });
-    res.send("Cookie has been set!");
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
 });
-
 
 // express-error is used to create custom error classes with status codes and messages
 const ExpressError = require("./utils/ExpressError");
@@ -42,7 +59,8 @@ const port = 8080;
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-
+// use express.urlencoded middleware to parse incoming request bodies 
+// in a middleware before your handlers, available under the req.body property.
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));

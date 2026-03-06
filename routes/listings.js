@@ -7,6 +7,8 @@ const wrapAsync = require("../utils/wrapAsync");
 const ExpressError = require("../utils/ExpressError");
 const Review = require("../models/review.js");
 const upload = require("../config/multerListing.js");
+// fs is used to delete the image file from the server when a listing is deleted fs is file system
+const fs = require("fs");
 
 // VALIDATION
 function validateListing(req, res, next) {
@@ -44,7 +46,7 @@ router.post(
                 url: "/uploads/listings/" + req.file.filename
             };
         }
-
+        req.flash("success", "Listing created successfully!");
         await newListing.save();
         res.redirect("/listings");
     })
@@ -55,7 +57,10 @@ router.get("/:id", wrapAsync(async (req, res) => {
 
     const { id } = req.params;
     const list = await Listing.findById(id).populate("reviews");
-    if (!list) throw new ExpressError(404, "Listing not found");
+      if (!list){
+        req.flash("error", "Listing doesn't exist.");
+        return res.redirect("/listings");
+    }
     res.render("listings/show.ejs", { list });
 
 }));
@@ -65,7 +70,10 @@ router.get("/:id/edit", wrapAsync(async (req, res) => {
 
     const { id } = req.params;
     const list = await Listing.findById(id);
-    if (!list) throw new ExpressError(404, "Listing not found");
+    if (!list){
+        req.flash("error", "Listing doesn't exist.");
+        return res.redirect("/listings");
+    }
     res.render("listings/edit.ejs", { list });
 
 }));
@@ -86,15 +94,45 @@ wrapAsync(async (req, res) => {
 
             await updatedListing.save();
         }
-
+        req.flash("success", "Listing updated successfully!");
         res.redirect(`/listings/${id}`);
     })
 );
 
 // Delete listing
+// router.delete("/:id", wrapAsync(async (req, res) => {
+//     const { id } = req.params;
+//     const deletedListing = await Listing.findByIdAndDelete(id);
+
+//     if (deletedListing) {
+//         req.flash("success", "Listing deleted successfully!");
+//     } else {
+//         req.flash("error", "Listing not found.");
+//     }
+//     res.redirect("/listings");
+// }));
+
+// delete listing  and also assosiated image file
+
 router.delete("/:id", wrapAsync(async (req, res) => {
     const { id } = req.params;
-    await Listing.findByIdAndDelete(id);
+    const deletedListing = await Listing.findByIdAndDelete(id);
+    if (deletedListing) {
+        if (deletedListing.image && deletedListing.image.filename) {
+            const imagePath = `uploads/listings/${deletedListing.image.filename
+            }`;
+            fs.unlink(imagePath, (  err) => {
+                if (err) {
+                    console.error("Error deleting image file:", err);   
+                } else {
+                    console.log("Image file deleted successfully.");
+                }
+            });
+        }
+        req.flash("success", "Listing deleted successfully!");
+    } else {
+        req.flash("error", "Listing not found.");
+    }   
     res.redirect("/listings");
 }));
 
@@ -106,6 +144,7 @@ router.post("/:id/reviews", wrapAsync(async (req, res) => {
     const newReview = new Review(req.body.review);
     await newReview.save();
     list.reviews.push(newReview._id);
+    req.flash("success", "Review added successfully!");  
     await list.save();
     res.redirect(`/listings/${id}`);
 }));
@@ -118,6 +157,8 @@ router.delete("/:id/reviews/:reviewId", wrapAsync(async (req, res) => {
         $pull: { reviews: reviewId }
     });
     await Review.findByIdAndDelete(reviewId);
+    req.flash("success", "Review deleted successfully!");
+    
     res.redirect(`/listings/${id}`);
 }));
 
