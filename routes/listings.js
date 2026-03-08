@@ -9,6 +9,8 @@ const Review = require("../models/review.js");
 const upload = require("../config/multerListing.js");
 // fs is used to delete the image file from the server when a listing is deleted fs is file system
 const fs = require("fs");
+const { IsloggedIn } = require("../middleware.js");
+const passport = require('passport');
 
 // VALIDATION
 function validateListing(req, res, next) {
@@ -20,22 +22,62 @@ function validateListing(req, res, next) {
     next();
 }
 
+router.get("/", wrapAsync(
+    async (req, res) => {
+        let { page = 1, category } = req.query;
+
+        page = parseInt(page);
+        const limit = 12;
+        const skip = (page - 1) * limit;
+
+        let filter = {};
+
+        // Category Filter
+        if (category && category !== "all") {
+            filter.category = category;
+        }
+
+        const totalListings = await Listing.countDocuments(filter);
+        const totalPages = Math.ceil(totalListings / limit);
+
+        const all_listings = await Listing.find(filter)
+            .skip(skip)
+            .limit(limit);
+
+        res.render("listings/index", {
+            all_listings,
+            currentPage: page,
+            totalPages,
+            selectedCategory: category || "all",
+        });
+    }));
+
 // Show all listings
-router.get("/", wrapAsync(async (req, res) => {
-    const all_listings = await Listing.find({});
-    res.render("listings/index.ejs", { all_listings });
-}));
+// router.get("/", wrapAsync(async (req, res) => {
+
+//     let page = parseInt(req.query.page) || 1;
+//     let limit = 12;
+
+//     const totalListings = await Listing.countDocuments({});
+//     const totalPages = Math.ceil(totalListings / limit);
+
+//     const all_listings = await Listing.find({})
+//         .skip((page - 1) * limit)
+//         .limit(limit);
+
+//     res.render("listings/index.ejs", {all_listings,currentPage: page,totalPages});
+
+// }));
+
+
 
 // New form
-router.get("/new", (req, res) => {
+router.get("/new", IsloggedIn, (req, res) => {
     res.render("listings/new.ejs");
 });
 
 // Create listing
-router.post(
-    "/",
-    upload.single("image"),
-    validateListing,
+router.post("/", IsloggedIn, upload.single("image"), validateListing,
     wrapAsync(async (req, res) => {
 
         const newListing = new Listing(req.body.listing);
@@ -57,7 +99,7 @@ router.get("/:id", wrapAsync(async (req, res) => {
 
     const { id } = req.params;
     const list = await Listing.findById(id).populate("reviews");
-      if (!list){
+    if (!list) {
         req.flash("error", "Listing doesn't exist.");
         return res.redirect("/listings");
     }
@@ -66,11 +108,11 @@ router.get("/:id", wrapAsync(async (req, res) => {
 }));
 
 // Edit form
-router.get("/:id/edit", wrapAsync(async (req, res) => {
+router.get("/:id/edit", IsloggedIn, wrapAsync(async (req, res) => {
 
     const { id } = req.params;
     const list = await Listing.findById(id);
-    if (!list){
+    if (!list) {
         req.flash("error", "Listing doesn't exist.");
         return res.redirect("/listings");
     }
@@ -79,12 +121,12 @@ router.get("/:id/edit", wrapAsync(async (req, res) => {
 }));
 
 // Update listing
-router.put("/:id", upload.single("image"),validateListing,
-wrapAsync(async (req, res) => {
+router.put("/:id", IsloggedIn, upload.single("image"), validateListing,
+    wrapAsync(async (req, res) => {
 
         const { id } = req.params;
 
-        let updatedListing = await Listing.findByIdAndUpdate( id,req.body.listing,{ runValidators: true, new: true });
+        let updatedListing = await Listing.findByIdAndUpdate(id, req.body.listing, { runValidators: true, new: true });
 
         if (req.file) {
             updatedListing.image = {
@@ -99,31 +141,18 @@ wrapAsync(async (req, res) => {
     })
 );
 
-// Delete listing
-// router.delete("/:id", wrapAsync(async (req, res) => {
-//     const { id } = req.params;
-//     const deletedListing = await Listing.findByIdAndDelete(id);
-
-//     if (deletedListing) {
-//         req.flash("success", "Listing deleted successfully!");
-//     } else {
-//         req.flash("error", "Listing not found.");
-//     }
-//     res.redirect("/listings");
-// }));
-
 // delete listing  and also assosiated image file
 
-router.delete("/:id", wrapAsync(async (req, res) => {
+router.delete("/:id", IsloggedIn, wrapAsync(async (req, res) => {
     const { id } = req.params;
     const deletedListing = await Listing.findByIdAndDelete(id);
     if (deletedListing) {
         if (deletedListing.image && deletedListing.image.filename) {
             const imagePath = `uploads/listings/${deletedListing.image.filename
-            }`;
-            fs.unlink(imagePath, (  err) => {
+                }`;
+            fs.unlink(imagePath, (err) => {
                 if (err) {
-                    console.error("Error deleting image file:", err);   
+                    console.error("Error deleting image file:", err);
                 } else {
                     console.log("Image file deleted successfully.");
                 }
@@ -132,7 +161,7 @@ router.delete("/:id", wrapAsync(async (req, res) => {
         req.flash("success", "Listing deleted successfully!");
     } else {
         req.flash("error", "Listing not found.");
-    }   
+    }
     res.redirect("/listings");
 }));
 
@@ -144,13 +173,13 @@ router.post("/:id/reviews", wrapAsync(async (req, res) => {
     const newReview = new Review(req.body.review);
     await newReview.save();
     list.reviews.push(newReview._id);
-    req.flash("success", "Review added successfully!");  
+    req.flash("success", "Review added successfully!");
     await list.save();
     res.redirect(`/listings/${id}`);
 }));
 
 // Delete review
-router.delete("/:id/reviews/:reviewId", wrapAsync(async (req, res) => {
+router.delete("/:id/reviews/:reviewId", IsloggedIn, wrapAsync(async (req, res) => {
     const { id, reviewId } = req.params;
     await Listing.findByIdAndUpdate(id, {
         // $pull operator removes the reviewId from the reviews array in the listing document
@@ -158,8 +187,34 @@ router.delete("/:id/reviews/:reviewId", wrapAsync(async (req, res) => {
     });
     await Review.findByIdAndDelete(reviewId);
     req.flash("success", "Review deleted successfully!");
-    
+
     res.redirect(`/listings/${id}`);
 }));
+
+
+router.get("/:id/checkout", async (req, res) => {
+
+    const listing = await Listing.findById(req.params.id);
+
+    const checkIn = req.query.checkIn;
+    const checkOut = req.query.checkOut;
+    const guests = req.query.guests || 1;
+
+    const nights = 2;
+    const tax = 239;
+    const total = (nights * listing.price) + tax;
+
+    res.render("bookings/checkout", {
+        listing,
+        checkIn,
+        checkOut,
+        guests,
+        nights,
+        tax,
+        total
+    });
+
+});
+
 
 module.exports = router;
