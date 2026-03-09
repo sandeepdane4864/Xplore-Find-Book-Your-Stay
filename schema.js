@@ -40,8 +40,8 @@ module.exports.userSchema = Joi.object({
             .required(),
 
         profilePicture: Joi.string()
-                .uri()
-                .allow("", null),
+            .uri()
+            .allow("", null),
 
 
         phone_no: Joi.string()
@@ -78,5 +78,5 @@ module.exports.reviewSchema = Joi.object({
             .max(500)
             .required()
     }).required()
-}); 
+});
 
