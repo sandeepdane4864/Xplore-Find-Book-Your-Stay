@@ -10,25 +10,42 @@ const ejsMate = require("ejs-mate");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const flash = require("connect-flash");
- 
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user");
+const bookingsRoutes = require("./routes/bookings");
+
+
 const sessionOptions = {
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookies :{
+    cookies: {
         //difference btw expires and maxage is that expires sets an absolute expiration date for the cookie
         // while maxage sets a relative expiration time from the moment the cookie is set.
-        expires : Date.now() + 1000 * 60 * 60 * 24 , // 1 day
-        maxage : 1000 * 60 * 60 * 24 , // 1 day,
+        expires: Date.now() + 1000 * 60 * 60 * 24, // 1 day
+        maxage: 1000 * 60 * 60 * 24, // 1 day,
         httpOnly: true,
     }
 }
-
-app.use(session(sessionOptions));
 app.use(cookieParser());
-app.use(flash()); 
+app.use(session(sessionOptions));
+app.use(flash());
 
+// authentication setup
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+// local strategy is used to authenticate users using a username and password.
+// user.authenticate() is a static method used by User model to authenticate users
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+// serializeUser and deserializeUser are used to manage user sessions.
+
+
+// middleware to flash success & error messages to all templates 
 app.use((req, res, next) => {
+    res.locals.user = req.user || null; // make the authenticated user available in all templates as 'user'
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     next();
@@ -40,6 +57,7 @@ const ExpressError = require("./utils/ExpressError");
 // Require ROUTES
 const listingRoutes = require("./routes/listings");
 const userRoutes = require("./routes/users");
+const user = require("./models/user");
 
 // DATABASE CONNECTION
 const mongo_URL = process.env.ATLAS_URL;
@@ -66,6 +84,7 @@ app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 // middleware to serve uploaded images from the public/uploads directory
 app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 
 // Home
@@ -73,9 +92,11 @@ app.get("/", (req, res) => {
     res.render("listings/home.ejs");
 });
 
+
 // USE ROUTERS
 app.use("/listings", listingRoutes);
 app.use("/", userRoutes);
+app.use("/bookings", bookingsRoutes);
 
 
 // 404 HANDLER

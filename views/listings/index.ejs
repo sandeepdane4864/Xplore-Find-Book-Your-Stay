@@ -1,78 +1,99 @@
 <% layout('/layouts/boilerplate') -%>
+  <style>
+    .category-filter {
+      color: black;
+      font-size: 14px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .category-filter:hover {
+      background-color: #f8f9fa;
+    }
+
+    .category-filter.active  i {
+      background-color:white;
+      /* Bootstrap danger color */
+      color:  #dc3545!important;
+      font-weight: 600;
+      border-radius: 8px;
+    }
+  </style>
 
   <body>
-    
+
     <section id="icons">
       <div class="container mt-4">
         <div class="row text-center g-1">
 
           <div class="col-4 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=all" class="category-filter text-decoration-none d-block py-2 active" data-filter="all">
-              <i class="fas fa-fire fa-1 mb-2"></i>
+            <a href="/listings?category=all"
+              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'all' ? 'active' : '' %>">
+              <i class="fas fa-fire mb-2"></i>
               <div>Trending</div>
             </a>
           </div>
 
-          <!-- Rooms -->
           <div class="col-6 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=Rooms" class="category-filter text-decoration-none d-block py-2" data-filter="rooms">
-              <i class="fas fa-home fa-1 mb-2"></i>
-              <p>Rooms</p>
+            <a href="/listings?category=Rooms"
+              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Rooms' ? 'active' : '' %>">
+              <i class="fas fa-home mb-2"></i>
+              <div>Rooms</div>
             </a>
           </div>
 
-          <!-- Beachfront -->
           <div class="col-6 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=beachfront" class="category-filter text-decoration-none d-block py-2" data-filter="beachfront">
-              <i class="fas fa-umbrella-beach fa-1 mb-2"></i>
+            <a href="/listings?category=Beachfront"
+              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Beachfront' ? 'active' : '' %>">
+              <i class="fas fa-umbrella-beach mb-2"></i>
               <div>Beachfront</div>
             </a>
           </div>
 
-          <!-- Pools -->
           <div class="col-6 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=pools" class="category-filter text-decoration-none d-block py-2" data-filter="pools">
-              <i class="fas fa-swimmer fa-1 mb-2"></i>
+            <a href="/listings?category=Pools"
+              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Pools' ? 'active' : '' %>">
+              <i class="fas fa-swimmer mb-2"></i>
               <div>Pools</div>
             </a>
           </div>
 
-          <!-- Castles -->
           <div class="col-6 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=castles" class="category-filter text-decoration-none d-block py-2" data-filter="castles">
-              <i class="fas fa-chess-rook fa-1 mb-2"></i>
+            <a href="/listings?category=Castles"
+              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Castles' ? 'active' : '' %>">
+              <i class="fas fa-chess-rook mb-2"></i>
               <div>Castles</div>
             </a>
           </div>
 
-          <!-- Boat House -->
           <div class="col-6 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=boat-house" class="category-filter text-decoration-none d-block py-2" data-filter="boat-house">
-              <i class="fas fa-ship fa-1 mb-2"></i>
+            <a href="/listings?category=Boathouse"
+              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Boathouse' ? 'active' : '' %>">
+              <i class="fas fa-ship mb-2"></i>
               <div>Boat House</div>
             </a>
           </div>
 
-          <!-- Golfing -->
           <div class="col-6 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=golfing" class="category-filter text-decoration-none d-block py-2" data-filter="golfing">
-              <i class="fas fa-golf-ball fa-1 mb-2"></i>
+            <a href="/listings?category=Golfing"
+              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Golfing' ? 'active' : '' %>">
+              <i class="fas fa-golf-ball mb-2"></i>
               <div>Golfing</div>
             </a>
           </div>
 
-          <!-- Iconic Cities -->
           <div class="col-6 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=iconic-cities" class="category-filter text-decoration-none d-block py-2" data-filter="iconic-cities">
-              <i class="fas fa-mountain fa-1 mb-2"></i>
+            <a href="/listings?category=Iconic Cities"
+              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Iconic Cities' ? 'active' : '' %>">
+              <i class="fas fa-city mb-2"></i>
               <div>Iconic Cities</div>
             </a>
           </div>
 
-          <!-- Palaces -->
           <div class="col-6 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=palaces" class="category-filter text-decoration-none d-block py-2" data-filter="palaces">
-              <i class="fas fa-landmark fa-1 mb-2"></i>
+            <a href="/listings?category=Palaces"
+              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Palaces' ? 'active' : '' %>">
+              <i class="fas fa-landmark mb-2"></i>
               <div>Palaces</div>
             </a>
           </div>
@@ -116,6 +137,51 @@
             <% } %>
         </div>
       </div>
+      <div class="d-flex justify-content-center mt-4">
+        <nav aria-label="Listings pages">
+          <ul class="pagination flex-wrap justify-content-center">
+
+            <% if(currentPage> 1){ %>
+              <li class="page-item">
+                <a class="page-link" href="/listings?page=<%= currentPage-1 %>">← Prev</a>
+              </li>
+              <% } %>
+
+                <% for(let i=1; i <=totalPages; i++){ %>
+
+                  <% if(i===currentPage){ %>
+                    <li class="page-item active">
+                      <span class="page-link">
+                        <%= i %>
+                      </span>
+                    </li>
+
+                    <% } else if(i===1 || i===totalPages || (i>= currentPage-1 && i <= currentPage+1)){ %>
+                        <li class="page-item">
+                          <a class="page-link" href="/listings?page=<%= i %>">
+                            <%= i %>
+                          </a>
+                        </li>
+
+                        <% } else if(i===currentPage-2 || i===currentPage+2){ %>
+                          <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                          </li>
+                          <% } %>
+
+                            <% } %>
+
+                              <% if(currentPage < totalPages){ %>
+                                <li class="page-item">
+                                  <a class="page-link" href="/listings?page=<%= currentPage+1 %>">Next →</a>
+                                </li>
+                                <% } %>
+
+          </ul>
+        </nav>
+      </div>
     </section>
-    
+
+
+
   </body>

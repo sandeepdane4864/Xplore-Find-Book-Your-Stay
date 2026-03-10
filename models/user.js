@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const passportLocalMongoose = require('passport-local-mongoose');
+const passportLocalMongoose = require("passport-local-mongoose").default;
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -24,14 +24,15 @@ const userSchema = new mongoose.Schema({
         unique: true,
         lowercase: true
     },
+
     profilePicture: {
         filename: {
             type: String,
-            default: "https://res.cloudinary.com/dzqj8y1w6/image/upload/v1700000000/default-profile-picture.png"
+            default: '/uploads/123.jpg'
         },
         url: {
             type: String,
-            default: "https://res.cloudinary.com/dzqj8y1w6/image/upload/v1700000000/default-profile-picture.png"
+            default: "/uploads/123.png"
         }
     },
     phone_no: {
@@ -47,10 +48,10 @@ const userSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    password: {
-        type: String,
-        required: true
-    }
+    owner: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Listing"
+    }],
 }, { timestamps: true });
 
 // Virtual full name

@@ -63,7 +63,7 @@
      font-size: 27px; 
  }
  .navbar-nav{
-    font-size: 18px;
+    font-size: 20px;
     padding-top: 3px;
    color: black !important;
  }
@@ -161,3 +161,29 @@
   min-width: 350px;   /* Minimum size */
   height: auto;
 }
+
+/* Pagination normal */
+.pagination .page-link {
+  color: #dc3545; 
+  border-color: #dc3545;
+}
+
+/* Hover effect */
+.pagination .page-link:hover {
+  background-color: #dc3545;
+  color: white;
+  border-color: #dc3545;
+}
+
+/* Active page */
+.pagination .page-item.active .page-link {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: white;
+}
+
+/* Disabled dots */
+.pagination .page-item.disabled .page-link {
+  color: #999;
+}
+

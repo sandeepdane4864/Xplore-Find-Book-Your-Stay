@@ -9,8 +9,8 @@
       <a class="navbar-brand" href="/">Xplore</a>
 
       <!-- Mobile Toggle -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-        data-bs-target="#mainNavbar">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -19,61 +19,101 @@
 
         <!-- Left Links -->
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
           <li class="nav-item">
             <a class="nav-link" href="/">Home</a>
           </li>
-
           <li class="nav-item">
             <a class="nav-link" href="/listings">All Listings</a>
           </li>
-
           <li class="nav-item">
             <a class="nav-link" href="/listings/new">Add New</a>
           </li>
-
         </ul>
 
-        <!-- Search Bar -->
-        <form class="d-flex my-3 my-lg-0 mx-lg-3" role="search">
-          <input class="form-control rounded-pill me-2"
-            type="search" placeholder="Search listings">
-          <button class="btn btn-danger rounded-pill px-3"
-            type="submit">
-            <i class="bi bi-search"></i>
-          </button>
-        </form>
+        <!-- Mobile profile dropdown -->
+        <% if(user){ %>
+          <li class="nav-item dropdown d-lg-none mt-2">
 
-        <!-- Right Side -->
-        <div class="d-flex align-items-center">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
 
-          <!-- Show this if NOT logged in -->
-          <div id="guestButtons" class="d-flex">
-            <a href="/login" class="btn btn-outline-danger me-2">Login</a>
-            <a href="/signup" class="btn btn-danger">Sign Up</a>
-          </div>
+              <img
+                src="<%= user && user.profilePicture && user.profilePicture.url ? user.profilePicture.url : '/uploads/123.png' %>"
+                width="40" height="40" class="rounded-circle border border-danger">
 
-          <!-- Show this if logged in -->
-          <div id="userDropdown" class="dropdown ms-3">
-            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
-              data-bs-toggle="dropdown">
-              <img src="https://i.pinimg.com/736x/db/83/8b/db838bc092299656764d9bf40f1b3d00.jpg"
-                alt="profile"
-                width="40"
-                height="40"
-                class="rounded-circle border border-2 border-danger">
+              <span>Hello, <%= user.firstName %></span>
+
             </a>
 
-            <ul class="dropdown-menu dropdown-menu-end shadow">
+            <ul class="dropdown-menu">
+
               <li><a class="dropdown-item" href="/profile">Profile</a></li>
               <li><a class="dropdown-item" href="/settings">Settings</a></li>
-              <li><hr class="dropdown-divider"></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
               <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
-            </ul>
-          </div>
 
-        </div>
+            </ul>
+          </li>
+          <% } %>
+
+            </ul>
+
+            <!-- Center Search -->
+            <form class="d-flex mx-auto my-3 my-lg-0" action="/listings" method="GET"
+              style="max-width:350px;width:100%;">
+              <input class="form-control rounded-pill me-2" type="search" name="q" placeholder="Search places">
+              <button class="btn btn-danger rounded-pill px-3">
+                <i class="bi bi-search"></i>
+              </button>
+            </form>
+
+            <!-- Right Side -->
+            <div class="d-flex align-items-center">
+
+              <% if(!user){ %>
+
+                <a href="/login" class="btn btn-outline-danger me-2">Login</a>
+                <a href="/signup" class="btn btn-danger">Sign Up</a>
+
+                <% } else { %>
+
+                  <!-- Desktop profile dropdown -->
+                  <div class="dropdown d-none d-lg-block">
+
+                    <a class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+
+                      <img
+                        src="<%= (user.profilePicture && user.profilePicture.url) ? user.profilePicture.url : '/images/123.png' %>"
+                        width="40" height="40" class="rounded-circle border border-danger">
+
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                      <li>
+                        <h6 class="dropdown-header">Hello, <%= user.firstName %>!</h6>
+                      </li>
+
+                      <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                      <li><a class="dropdown-item" href="/settings">Settings</a></li>
+
+                      <li>
+                        <hr class="dropdown-divider">
+                      </li>
+
+                      <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
+
+                    </ul>
+
+                  </div>
+
+                  <% } %>
+
+            </div>
+
       </div>
     </div>
   </nav>
+
 </section>

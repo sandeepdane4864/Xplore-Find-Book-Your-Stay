@@ -1,12 +1,35 @@
 <% layout('/layouts/boilerplate') -%>
+<style>
+  .site-logo {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
+
+    .site-title {
+      font-weight: 700;
+      color: #dc3545;
+      letter-spacing: 1px;
+    }
+</style>
 
   <body>
+    <div class="container lists pt-3 mt-3">
+      <div class="row align-items-center justify-content-center mb-3">
+        <div class="col-auto">
+          <img src="/images/logo.png" alt="Xplore Logo" class="site-logo">
+        </div>
+        <div class="col-auto text-start">
+          <h2 class="site-title mb-0">Xplore</h2>
+          <p class="text-muted small mb-0">Find and share amazing places to stay</p>
+        </div>
+      </div>
 
-    <div class="container lists">
       <div class="row justify-content-center">
         <div class="col-12 col-sm-11 col-md-8 col-lg-6 col-xl-5 mb-5 mt-4">
 
-          <div class="card mb-4 mt-4 shadow-sm">
+
+          <div class="card mb-4 mt-0 shadow-sm pt-0">
 
             <div class="card-header">
               <h3 class="mb-0">Login</h3>
@@ -14,12 +37,12 @@
 
             <div class="card-body">
 
-              <form action="/login" method="POST" novalidate class="needs-validation" >
+              <form action="/login" method="POST" novalidate class="needs-validation">
 
                 <!-- EMAIL -->
                 <div class="mb-3">
-                  <label class="form-label">Email</label>
-                  <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                  <label class="form-label">Username</label>
+                  <input type="string" name="username" class="form-control" placeholder="Enter your Username" required>
                 </div>
 
                 <!-- PASSWORD -->

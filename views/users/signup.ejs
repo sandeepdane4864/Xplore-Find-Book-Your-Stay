@@ -1,124 +1,234 @@
 <% layout('/layouts/boilerplate') -%>
 
-  <div class="container lists">
-    <div class="row justify-content-center">
-      <div class="col-12 col-sm-11 col-md-9 col-lg-6 col-xl-5">
+  <style>
+    body {
+      background: #f8f9fa;
+    }
 
-        <div class="card mb-4 mt-4 shadow-sm">
-          <div class="card-header">
-            <h3 class="mb-0">Create Account</h3>
-          </div>
+    .lists {
+      margin-top: 20px;
+    }
 
-          <div class="card-body">
+    .signup-card {
+      border-radius: 16px;
+      overflow: hidden;
+    }
 
-            <form action="/signup" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+    .signup-card .card-header {
+      background: #dc3545;
+      color: #fff;
+      font-weight: 600;
+      padding: 1rem;
+    }
 
-              <!-- FIRST NAME -->
-              <div class="mb-3">
-                <label class="form-label">First Name</label>
-                <input type="text" name="user[firstName]" class="form-control" required>
-                <div class="invalid-feedback">
-                  First name is required. Atlest 3 characters.
-                </div>
-              </div>
+    .form-control,
+    .form-select {
+      border-radius: 10px;
+      padding: 10px;
+    }
 
-              <!-- LAST NAME -->
-              <div class="mb-3">
-                <label class="form-label">Last Name</label>
-                <input type="text" name="user[lastName]" class="form-control" required>
-                <div class="invalid-feedback">
-                  Last name is required. Atlest 3 characters.
-                </div>
-              </div>
+    .alert {
+      border-radius: 10px;
+    }
 
-              <!-- USERNAME -->
-              <div class="mb-3">
-                <label class="form-label">Username</label>
-                <input type="text" name="user[username]" class="form-control" minlength="3" required>
-                <div class="invalid-feedback">
-                  Username must be combination of Alphabet, numbers and characters. Atlest 3 characters.
-                </div>
-              </div>
+    .site-logo {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
 
-              <!-- EMAIL -->
-              <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" name="user[email]" class="form-control" required>
-                <div class="invalid-feedback">
-                  Please enter a valid email address.
-                </div>
-              </div>
+    .site-title {
+      font-weight: 700;
+      color: #dc3545;
+      letter-spacing: 1px;
+    }
+  </style>
 
-              <!-- PROFILE PICTURE -->
-              <div class="mb-3">
-                <label class="form-label">Profile Picture</label>
-                <input type="file" name="profilePicture" accept="image/*" class="form-control">
-              </div>
+  <body>
+    <div class="container lists mb-4">
 
-              <!-- PHONE -->
-              <div class="mb-3">
-                <label class="form-label">Phone Number</label>
-                <input type="tel" name="user[phone_no]" class="form-control" pattern="[0-9]{10}" maxlength="10"
-                  required>
-                <div class="invalid-feedback">
-                  Phone number must be exactly 10 digits.
-                </div>
-              </div>
-
-              <!-- GENDER -->
-              <div class="mb-3">
-                <label class="form-label">Gender</label>
-                <select name="user[gender]" class="form-select" required>
-                  <option value="">Select Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
-                <div class="invalid-feedback">
-                  Please select your gender.
-                </div>
-              </div>
-
-              <!-- DOB -->
-              <div class="mb-3">
-                <label class="form-label">Date of Birth</label>
-                <input type="date" name="user[DOB]" class="form-control" required>
-                <div class="invalid-feedback">
-                  Date of birth is required.
-                </div>
-              </div>
-
-              <!-- PASSWORD -->
-              <div class="mb-3">
-                <label class="form-label">Password</label>
-                <div class="input-group">
-                  <input type="password" name="user[password]" id="password" class="form-control" minlength="6"
-                    required>
-                  <button type="button" class="btn btn-outline-secondary" id="togglePassword">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                </div>
-                <div class="invalid-feedback">
-                  Password must be at least 6 characters.
-                </div>
-              </div>
-
-              <!-- BUTTONS -->
-              <div class="d-flex justify-content-between align-items-center">
-                <button type="submit" class="btn btn-danger">
-                  Register
-                </button>
-
-                <a href="/login" class="btn btn-outline-secondary">
-                  Already have an account?
-                </a>
-              </div>
-
-            </form>
-
-          </div>
+      <!-- Brand Header -->
+      <div class="row align-items-center justify-content-center mb-3">
+        <div class="col-auto">
+          <img src="/images/logo.png" alt="Xplore Logo" class="site-logo">
         </div>
+        <div class="col-auto text-start">
+          <h2 class="site-title mb-0">Xplore</h2>
+          <p class="text-muted small mb-0">Find and share amazing places to stay</p>
+        </div>
+      </div>
 
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-11 col-md-9 col-lg-6 col-xl-5">
+
+          <!-- Card -->
+          <div class="card signup-card shadow-lg border-0">
+
+            <div class="card-header">
+              <h3 class="mb-0">Create Account</h3>
+            </div>
+
+            <div class="card-body">
+              <!-- Form -->
+              <!-- Signup Form -->
+              <form action="/signup" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+
+                <!-- PROFILE PICTURE -->
+                <div class="mb-3 text-center">
+                  <h5 class="mb-1">Profile Picture</h5>
+                  <img id="previewImage" src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                    class="mt-1 rounded-circle" width="90" height="90" style="object-fit:cover;">
+                  <input type="file" name="profilePicture" accept="image/*" class="form-control mt-2" id="profileInput">
+                </div>
+
+                <!-- FIRST NAME -->
+                <div class="mb-3">
+                  <label class="form-label">First Name</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" name="user[firstName]" class="form-control" minlength="3" required>
+                    <div class="invalid-feedback">
+                    First name is required. At least 3 characters.
+                  </div>
+                  </div>
+                  
+                </div>
+
+                <!-- LAST NAME -->
+                <div class="mb-3">
+                  <label class="form-label">Last Name</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" name="user[lastName]" class="form-control" required>
+                    <div class="invalid-feedback">
+                    Last name is required.
+                  </div>
+                  </div>
+                  
+                </div>
+
+                <!-- USERNAME -->
+                <div class="mb-3">
+                  <label class="form-label">Username</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-at"></i></span>
+                    <input type="text" name="user[username]" class="form-control" minlength="3" required>
+                    <div class="invalid-feedback">
+                      Username is required. At least 3 characters. Alphanumeric
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- EMAIL -->
+                <div class="mb-3">
+                  <label class="form-label">Email</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    <input type="email" name="user[email]" class="form-control" required>
+                  </div>
+                  <div class="invalid-feedback">
+                    Please enter a valid email address.
+                  </div>
+                </div>
+
+                <!-- PHONE -->
+                <div class="mb-3">
+                  <label class="form-label">Phone Number</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                    <input type="tel" name="user[phone_no]" class="form-control" pattern="[0-9]{10}" maxlength="10"
+                      required>
+                    <div class="invalid-feedback">
+                      Phone number must be exactly 10 digits.
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- GENDER -->
+                <div class="mb-3">
+                  <label class="form-label">Gender</label>
+                  <select name="user[gender]" class="form-select" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Please select your gender.
+                  </div>
+                </div>
+
+                <!-- DOB -->
+                <div class="mb-3">
+                  <label class="form-label">Date of Birth</label>
+                  <input type="date" name="user[DOB]" class="form-control" required>
+                  <div class="invalid-feedback">
+                    Date of birth is required.
+                  </div>
+                </div>
+
+                <!-- PASSWORD -->
+                <div class="mb-3">
+                  <label class="form-label">Password</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    <input type="password" name="user[password]" id="password" class="form-control" minlength="6"
+                      required>
+                    <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                    <div class="invalid-feedback">
+                      Password must be at least 6 characters.
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="d-grid gap-2 mt-3">
+                  <button type="submit" class="btn btn-danger btn-lg">
+                    <i class="bi bi-person-plus me-2"></i>Create Account
+                  </button>
+                  <a href="/login" class="btn btn-outline-secondary">
+                    Already have an account? Login
+                  </a>
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
-  </div>
+
+    <script>
+      // PROFILE IMAGE PREVIEW
+      const profileInput = document.getElementById("profileInput");
+      const previewImage = document.getElementById("previewImage");
+
+      profileInput.addEventListener("change", function (e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function () {
+            previewImage.src = reader.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      // PASSWORD TOGGLE
+      const togglePassword = document.getElementById("togglePassword");
+      const password = document.getElementById("password");
+
+      togglePassword.addEventListener("click", function () {
+        const type = password.getAttribute("type") === "password" ? "text" : "password";
+        password.setAttribute("type", type);
+      });
+
+
+    </script>

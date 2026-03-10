@@ -32,9 +32,9 @@
           <p class="card-text">
             <%= list.description %>
           </p>
-          <div class="card-btns mt-4">
-            <a class="btn btn-danger" href="#" role="button">Rent Now</a>
-          </div>
+          <form action="/listings/<%=list._id%>/checkout" method="get">
+            <button class="btn btn-danger" type="submit">Rent Now</button>
+          </form>
 
           <ul class="details-list list-unstyled mt-3">
             <li>🏠 Type: Apartment / House / PG (use your DB field)</li>
