@@ -21,7 +21,7 @@ const sessionOptions = {
     resave: false,
     saveUninitialized: true,
     cookies: {
-        
+
         //difference btw expires and maxage is that expires sets an absolute expiration date for the cookie
         // while maxage sets a relative expiration time from the moment the cookie is set.
         expires: Date.now() + 1000 * 60 * 60 * 24, // 1 day
@@ -92,7 +92,6 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 app.get("/", (req, res) => {
     res.render("listings/home.ejs");
 });
-
 
 // USE ROUTERS
 app.use("/listings", listingRoutes);
