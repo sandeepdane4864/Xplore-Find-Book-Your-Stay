@@ -7,6 +7,7 @@ const wrapAsync = require("../utils/wrapAsync");
 const ExpressError = require("../utils/ExpressError");
 const Review = require("../models/review.js");
 const upload = require("../config/multerListing.js");
+
 // fs is used to delete the image file from the server when a listing is deleted fs is file system
 const fs = require("fs");
 const { IsloggedIn } = require("../middleware.js");

@@ -21,6 +21,7 @@ const sessionOptions = {
     resave: false,
     saveUninitialized: true,
     cookies: {
+        
         //difference btw expires and maxage is that expires sets an absolute expiration date for the cookie
         // while maxage sets a relative expiration time from the moment the cookie is set.
         expires: Date.now() + 1000 * 60 * 60 * 24, // 1 day
