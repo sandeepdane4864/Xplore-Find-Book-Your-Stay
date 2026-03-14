@@ -206,6 +206,8 @@ const sampleListings = [
     location: "Banff",
     country: "Canada",
     category: "Rooms",
+    owner: "69b3fb2f00ec99a54297dbc8"
+
   },
   {
     title: "Art Deco Apartment in Miami",
@@ -232,6 +234,8 @@ const sampleListings = [
     location: "Phuket",
     country: "Thailand",
     category: "Pools",
+    owner: "69b3fb2f00ec99a54297dbc8"
+
   },
   {
     title: "Historic Castle in Scotland",
@@ -258,6 +262,8 @@ const sampleListings = [
     location: "Dubai",
     country: "United Arab Emirates",
     category: "Pools",
+    owner: "69b3fb2f00ec99a54297dbc8"
+
   },
   {
     title: "Rustic Log Cabin in Montana",
@@ -310,24 +316,66 @@ const sampleListings = [
     location: "Charleston",
     country: "United States",
     category: "Rooms",
+    owner: "69b3fb2f00ec99a54297dbc8"
+
   },
+  {
+    title:
+      "Dattatra Villa",
+    description:
+      "rooms available to stay and enjoy your holiday",
+    price:
+      4500,
+    category:
+      "Rooms",
+    location:
+      "SR.No 50, 45, NDA Bhauli Rd, Kudje, Maharashtra 411023",
+    country:
+      "India",
+    owner: "69b3fb2f00ec99a54297dbc8"
+    ,
+    image: {
+      filename: "listingimage",
+      url: "https://images.unsplash.com/photo-1602088113235-229c19758e9f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YmVhY2glMjB2YWNhdGlvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    },
+  },
+  {
+    title:
+      "The Marigold Villa",
+    description:
+      "Spacious Accommodation: The Marigold Villa in Pune offers a spacious v…",
+    image: {
+      filename: "listingimage",
+      url: "https://images.unsplash.com/photo-1602088113235-229c19758e9f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YmVhY2glMjB2YWNhdGlvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    },
+    price:
+      5200,
+    category:
+      "Castles",
+    location:
+      "Girivan, 412108 Pune ",
+    country:
+      "India",
+    owner: "69b3fb2f00ec99a54297dbc8"
+  },
+
 ];
 
 const sampleUser = {
-    username: "Sandeepdane",
-    email: "abc@gmail.com",
-    password: "sandy123",
+  username: "Sandeepdane",
+  email: "abc@gmail.com",
+  password: "sandy123",
 
-    firstName: "Sandeep",
-    lastName: "Dane",
+  firstName: "Sandeep",
+  lastName: "Dane",
 
-    phone_no: 1234567890,
-    gender: "Male", 
-    DOB: new Date("2004-11-12")
+  phone_no: 1234567890,
+  gender: "Male",
+  DOB: new Date("2004-11-12")
 };
 
 
 
 
-module.exports = { data: sampleListings,userdata : sampleUser};
+module.exports = { data: sampleListings, userdata: sampleUser };
 

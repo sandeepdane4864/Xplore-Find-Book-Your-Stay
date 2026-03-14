@@ -1,0 +1,199 @@
+<% layout('/layouts/boilerplate') -%>
+
+
+    <body>
+
+        <div class="container profile-wrapper">
+
+            <!-- Page Header -->
+            <div class="profile-header">
+                <h2>My Profile</h2>
+
+                <div class="profile-buttons">
+                    <a href="/profile/edit" class="btn btn-danger">Edit Profile</a>
+                    <a href="/listings" class="btn btn-outline-dark">Back Home</a>
+                </div>
+            </div>
+
+            <div class="row g-4">
+
+                <!-- LEFT PROFILE CARD -->
+                <div class="col-lg-4">
+
+                    <div class="profile-card text-center">
+
+                        <div class="profile-img">
+                            <img src="<%= user.profilePicture?.url || '/uploads/profilePictures/123.jpg' %>">
+                        </div>
+
+                        <h3>
+                            <%= user.fullName.charAt(0).toUpperCase() + user.fullName.slice(1)%>
+                        </h3>
+
+                        <p class="text-muted">@<%= user.username %>
+                        </p>
+
+                        <hr>
+
+                        <p class="member">
+                            Member since <%= user.createdAt.toDateString() %>
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RIGHT DETAILS -->
+                <div class="col-lg-8">
+
+                    <div class="card details-card">
+
+                        <h5 class="mb-4">Account Information</h5>
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+                                <label>First Name</label>
+                                <div class="info-box">
+                                    <%= user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1) %>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Last Name</label>
+                                <div class="info-box">
+                                    <%= user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1) %>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Email</label>
+                                <div class="info-box">
+                                    <%= user.email %>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Phone Number</label>
+                                <div class="info-box">
+                                    <%= user.phone_no %>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Gender</label>
+                                <div class="info-box">
+                                    <%= user.gender %>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label>Date of Birth</label>
+                                <div class="info-box">
+                                    <%= user.DOB.toDateString() %>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </body>
+
+
+    <style>
+        .profile-wrapper {
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+
+        /* header */
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        /* cards */
+
+        .profile-card,
+        .details-card {
+            border: none;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        /* profile image */
+
+        .profile-img {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .profile-img img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* username */
+
+        .username {
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .member-info {
+            font-size: 14px;
+            color: #999;
+        }
+
+        /* info fields */
+
+        label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            padding: 10px 12px;
+            border-radius: 10px;
+        }
+
+        /* buttons */
+
+        .btn-danger {
+            background: #ff385c;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background: #e61e4d;
+        }
+
+        /* mobile */
+
+        @media(max-width:768px) {
+
+            .profile-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+        }
+    </style>

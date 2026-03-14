@@ -18,18 +18,12 @@ async function seedDB() {
 
         // Clear old data
         await Listing.deleteMany({});
-        await User.deleteMany({});
         console.log("🗑️ Old data deleted");
 
         // Insert new data
-        // insert owner field in listing data
-        const user = await User.create(initdata.userdata[0]);
-        initdata.data.forEach(listing => {
-            listing.owner = user._id;
-        });
+        initdata.data = initdata.data.map((obj)=>({...obj, owner: "69b3faec00ec99a54297dbba"})
+        );
         await Listing.insertMany(initdata.data);
-
-        await User.create(initdata.userdata);
 
         console.log("🎉 Sample Data Inserted Successfully");
     } catch (err) {

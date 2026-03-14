@@ -28,11 +28,11 @@ const userSchema = new mongoose.Schema({
     profilePicture: {
         filename: {
             type: String,
-            default: '/uploads/123.jpg'
+            default: "123.jpg"
         },
         url: {
             type: String,
-            default: "/uploads/123.png"
+            default: "/uploads/profilePictures/123.jpg"
         }
     },
     phone_no: {
@@ -47,11 +47,7 @@ const userSchema = new mongoose.Schema({
     DOB: {
         type: Date,
         required: true
-    },
-    owner: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Listing"
-    }],
+    }
 }, { timestamps: true });
 
 // Virtual full name

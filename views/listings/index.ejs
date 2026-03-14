@@ -11,13 +11,49 @@
       background-color: #f8f9fa;
     }
 
-    .category-filter.active  i {
-      background-color:white;
+    .category-filter.active i {
+      background-color: white;
       /* Bootstrap danger color */
-      color:  #dc3545!important;
+      color: #dc3545 !important;
       font-weight: 600;
       border-radius: 8px;
     }
+
+   @media (max-width: 991px) {
+
+    .filterallicon {
+
+      margin-top: 15px;
+
+    }
+  }
+
+  .tax-switch{
+  border:1px solid #e5e5e5;
+  border-radius:30px;
+  padding:6px 14px;
+  background:white;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* Remove bootstrap default spacing */
+.tax-switch.form-check{
+  padding-left:12px;
+  margin-bottom:0;
+  font-weight: 600;
+  font-size: 19px;
+}
+
+.tax-switch .form-check-input{
+  margin:0;
+}
+
+.tax-switch .form-check-label{
+  margin:0;
+}
+   
   </style>
 
   <body>
@@ -67,14 +103,14 @@
           </div>
 
           <div class="col-6 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=Boathouse"
-              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Boathouse' ? 'active' : '' %>">
+            <a href="/listings?category=Boat House"
+              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Boat House' ? 'active' : '' %>">
               <i class="fas fa-ship mb-2"></i>
               <div>Boat House</div>
             </a>
           </div>
 
-          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+          <div class="col-6 col-sm-4 col-md-3 col-lg-1 ">
             <a href="/listings?category=Golfing"
               class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Golfing' ? 'active' : '' %>">
               <i class="fas fa-golf-ball mb-2"></i>
@@ -98,6 +134,12 @@
             </a>
           </div>
 
+          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+            <button class="btn btn-light border filter-btn filterallicon">
+              <i class="bi bi-sliders me-2"></i> Filters
+            </button>
+          </div>
+
         </div>
       </div>
     </section>
@@ -106,9 +148,21 @@
       <div class="container">
         <div class="d-flex justify-content-between align-items-center flex-wrap">
           <h2 class="header">All listings</h2>
-          <form action="/listings/new" method="get"><button type="submit" class="btn btn-danger">Create New
-              Post</button>
-          </form>
+          <div class="d-flex align-items-center gap-3">
+
+
+
+            <div class="form-check form-switch tax-switch">
+
+              <label class="form-check-label me-2 small" for="switchCheckDefault">
+                Price after taxes
+              </label>
+
+              <input class="form-check-input" type="checkbox" id="switchCheckDefault">
+
+            </div>
+
+          </div>
         </div>
         <div class="row">
           <% for(let list of all_listings){ %>
@@ -120,7 +174,13 @@
                   <h5 class="card-title">
                     <%= list.title %>
                   </h5>
-                  <h6 class="price">Price: &#8377; <%= list.price.toLocaleString("en-IN") %>/night
+                  <h6 class="price" data-base="<%= list.price %>" data-tax="<%= Math.round(list.price*1.1) %>">
+
+                    Price ₹
+                    <span class="price-value">
+                      <%= list.price.toLocaleString("en-IN") %>
+                    </span>/night
+
                   </h6>
                   <p class="location">Location: <%= list.location %>, <%= list.country %>
                   </p>
@@ -181,7 +241,37 @@
         </nav>
       </div>
     </section>
+    <script>
 
+      const taxSwitch = document.getElementById("switchCheckDefault");
+
+      if (taxSwitch) {
+
+        taxSwitch.addEventListener("change", () => {
+
+          const prices = document.querySelectorAll(".price");
+
+          prices.forEach(price => {
+
+            const base = price.dataset.base;
+            const tax = price.dataset.tax;
+
+            const priceText = price.querySelector(".price-value");
+
+            if (taxSwitch.checked) {
+              priceText.innerText = Number(tax).toLocaleString("en-IN");
+            }
+            else {
+              priceText.innerText = Number(base).toLocaleString("en-IN");
+            }
+
+          });
+
+        });
+
+      }
+
+    </script>
 
 
   </body>

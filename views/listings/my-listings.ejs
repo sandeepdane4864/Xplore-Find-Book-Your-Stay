@@ -1,0 +1,43 @@
+<% layout('/layouts/boilerplate') -%>
+<body>
+  <section>
+    <div class="container mb-4">
+      <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+        <h2 class="header">My Listings</h2>
+        <form action="/listings/new" method="get">
+          <button type="submit" class="btn btn-danger">Add New Listing</button>
+        </form>
+      </div>
+
+      <% if(listings.length === 0){ %>
+        <p>You haven't added any listings yet.</p>
+      <% } %>
+
+      <div class="row">
+        <% listings.forEach(list => { %>
+        <div class="col-sm-12 col-md-4 col-lg-3 mb-4 d-flex">
+          <div class="card w-100 text-wrap listing-card shadow-sm">
+            <img src="<%= list.image.url %>" class="card-img-top" alt="<%= list.title %>"
+              onclick="window.location.href='/listings/<%= list._id %>'">
+            <div class="card-body">
+              <h5 class="card-title"><%= list.title %></h5>
+              <h6 class="price">Price: &#8377; <%= list.price.toLocaleString("en-IN") %>/night</h6>
+              <p class="location">Location: <%= list.location %>, <%= list.country %></p>
+
+              <div class="btns">
+                <a href="/listings/<%= list._id %>" class="btn btn-outline-danger btn-sm">View</a>
+
+                <a href="/listings/<%= list._id %>/edit" class="btn btn-warning btn-sm">Edit</a>
+
+                <form action="/listings/<%= list._id %>?_method=DELETE" method="POST" class="d-inline">
+                  <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+</body>
