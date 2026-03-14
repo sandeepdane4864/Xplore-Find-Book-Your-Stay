@@ -14,21 +14,18 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const bookingsRoutes = require("./routes/bookings");
-
-
+const profileRoutes = require('./routes/profile');
 const sessionOptions = {
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookies: {
-
-        //difference btw expires and maxage is that expires sets an absolute expiration date for the cookie
-        // while maxage sets a relative expiration time from the moment the cookie is set.
-        expires: Date.now() + 1000 * 60 * 60 * 24, // 1 day
-        maxage: 1000 * 60 * 60 * 24, // 1 day,
+    cookie: {
+        expires: Date.now() + 1000 * 60 * 60 * 24,
+        maxAge: 1000 * 60 * 60 * 24,
         httpOnly: true,
     }
-}
+};
+
 app.use(cookieParser());
 app.use(session(sessionOptions));
 app.use(flash());
@@ -84,8 +81,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 // middleware to serve uploaded images from the public/uploads directory
-app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
-app.use('/uploads', express.static(__dirname + '/uploads'));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
 // Home
@@ -97,6 +93,7 @@ app.get("/", (req, res) => {
 app.use("/listings", listingRoutes);
 app.use("/", userRoutes);
 app.use("/bookings", bookingsRoutes);
+app.use("/profile", profileRoutes );
 
 
 // 404 HANDLER
