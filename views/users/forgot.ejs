@@ -1,0 +1,93 @@
+<% layout('/layouts/boilerplate') -%>
+
+    <style>
+        .site-logo {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .site-title {
+            font-weight: 700;
+            color: #dc3545;
+            letter-spacing: 1px;
+        }
+    </style>
+
+
+    <div class="container pt-3 mt-3 mb-5">
+
+        <!-- LOGO -->
+
+        <div class="row align-items-center justify-content-center mb-3">
+
+            <div class="col-auto">
+                <img src="/images/logo.png" class="site-logo">
+            </div>
+
+            <div class="col-auto text-start">
+                <h2 class="site-title mb-0">Xplore</h2>
+                <p class="text-muted small mb-0">Reset your password</p>
+            </div>
+
+        </div>
+
+
+        <div class="row justify-content-center">
+
+            <div class="col-12 col-sm-11 col-md-8 col-lg-6 col-xl-5">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-header">
+                        <h3 class="mb-0">Forgot Password</h3>
+                    </div>
+
+                    <div class="card-body">
+
+                        <p class="text-muted small">
+                            Enter your registered email and we will send you a password reset link.
+                        </p>
+
+                        <form action="/forgot-password" method="POST">
+
+                            <div class="mb-3">
+
+                                <label class="form-label">Email</label>
+
+                                <input type="email" name="email" class="form-control" placeholder="Enter your email"
+                                    required>
+
+                            </div>
+
+                            <div class="d-grid mb-2">
+
+                                <button class="btn btn-danger">
+
+                                    Send Reset Link
+
+                                </button>
+
+                            </div>
+
+                            <div class="text-center">
+
+                                <a href="/login" class="text-decoration-none text-danger small">
+
+                                    Back to Login
+
+                                </a>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>

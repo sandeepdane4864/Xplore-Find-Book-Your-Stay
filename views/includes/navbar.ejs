@@ -38,10 +38,10 @@
         <!-- Right Side -->
         <div class="d-flex align-items-center ">
 
-         <div class="airnbyourhome">
-           <form action="/listings/new" method="get"><button type="submit" class="btn btn-danger">Add Home</button>
-          </form>
-         </div>
+          <div class="airnbyourhome">
+            <form action="/listings/new" method="get"><button type="submit" class="btn btn-danger">Add Home</button>
+            </form>
+          </div>
 
           <% if(!user){ %>
 
@@ -71,7 +71,7 @@
                   </li>
 
                   <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                  <li><a class="dropdown-item" href="/my-bookings">My Bookings</a></li>
+                  <li><a class="dropdown-item" href="/bookings/mybookings">My Bookings</a></li>
                   <li><a class="dropdown-item" href="/listings/my-listings">My Listings</a></li>
                   <li><a class="dropdown-item" href="/settings">Settings</a></li>
 
@@ -102,7 +102,7 @@
                 <ul class="dropdown-menu">
 
                   <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                  <li><a class="dropdown-item" href="/my-bookings">My Bookings</a></li>
+                  <li><a class="dropdown-item" href="/bookings/mybookings">My Bookings</a></li>
                   <li><a class="dropdown-item" href="/listings/my-listings">My Listings</a></li>
                   <li><a class="dropdown-item" href="/settings">Settings</a></li>
 
@@ -126,4 +126,3 @@
     </div>
   </nav>
 </section>
-

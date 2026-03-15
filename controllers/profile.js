@@ -42,4 +42,39 @@ module.exports.editProfiledetails = async (req, res) => {
     res.redirect("/profile");
 };
 
+module.exports.getchangepasswordpage = (req,res)=>{
+res.render("users/changePassword.ejs");
+};
+
+module.exports.postchangepassword =  async (req, res) => {
+  try {
+
+    const { oldPassword, newPassword, confirmPassword } = req.body;
+
+    // check if new password matches confirm password
+    if (newPassword !== confirmPassword) {
+      req.flash("error", "New passwords do not match");
+      return res.redirect("/profile/change-password");
+    }
+
+    // logged in user
+    const user = req.user;
+
+    // change password
+    await user.changePassword(oldPassword, newPassword);
+
+    req.flash("success", "Password updated successfully");
+
+    res.redirect("/profile");
+
+  } catch (err) {
+
+    console.log(err);
+
+    req.flash("error", "Current password is incorrect");
+
+    res.redirect("/profile/change-password");
+
+  }
+};
 

@@ -1,30 +1,21 @@
 const express = require("express");
-const router = express.Router({ mergeParams: true });
-
-const Listing = require("../models/listing");
+const router = express.Router();
+const BookingController = require("../controllers/Bookings.js");
+const { IsloggedIn, SaveReturnTo } = require("../middleware");
 const wrapAsync = require("../utils/wrapAsync");
 
-const { IsloggedIn, SaveReturnTo} = require("../middleware.js");
-const BookingController = require("../controllers/Bookings.js")
+// My Bookings Page
+router.get("/bookings/mybookings", IsloggedIn, wrapAsync(BookingController.getMyBookings));
 
+// Checkout Page & Create Stripe Session
+router.route("/create-checkout-session/:id")
+.get(IsloggedIn, wrapAsync(BookingController.CreateCheckoutSession))
+.post(IsloggedIn, wrapAsync(BookingController.CreateCheckoutSession));
 
+// Payment Success
+router.get("/payment/success", IsloggedIn, wrapAsync(BookingController.Successpage));
 
-
-router.post("/create-checkout-session/:id", IsloggedIn,SaveReturnTo, wrapAsync(BookingController.CreateCheckoutSession));
-
-
-router.get("/success", IsloggedIn, (req, res) => {
-
-    res.render("bookings/success.ejs");
-
-});
-
-router.get("/cancel", IsloggedIn, (req, res) => {
-
-    res.render("bookings/cancel.ejs");
-
-});
-
-
+// Payment Cancel
+router.get("/payment/cancel", IsloggedIn, (BookingController.PaymentCancelpage));
 
 module.exports = router;

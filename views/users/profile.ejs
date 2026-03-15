@@ -1,199 +1,174 @@
 <% layout('/layouts/boilerplate') -%>
 
+<body>
+  <div class="container profile-wrapper">
 
-    <body>
+    <!-- Page Header -->
+    <div class="profile-header">
+      <h2>My Profile</h2>
 
-        <div class="container profile-wrapper">
+      <div class="profile-buttons">
+        <a href="/profile/edit" class="btn btn-danger profile-btn">Edit Profile</a>
+        <a href="/profile/change-password" class="btn btn-outline-danger profile-btn">Change Password</a>
+        <a href="/listings" class="btn btn-outline-dark profile-btn">Back Home</a>
+      </div>
+    </div>
 
-            <!-- Page Header -->
-            <div class="profile-header">
-                <h2>My Profile</h2>
+    <div class="row g-4">
 
-                <div class="profile-buttons">
-                    <a href="/profile/edit" class="btn btn-danger">Edit Profile</a>
-                    <a href="/listings" class="btn btn-outline-dark">Back Home</a>
-                </div>
-            </div>
+      <!-- LEFT PROFILE CARD -->
+      <div class="col-lg-4">
+        <div class="profile-card text-center">
+          <div class="profile-img">
+            <img src="<%= user.profilePicture?.url || '/uploads/profilePictures/123.jpg' %>">
+          </div>
 
-            <div class="row g-4">
+          <h3>
+            <%= user.fullName.charAt(0).toUpperCase() + user.fullName.slice(1)%>
+          </h3>
 
-                <!-- LEFT PROFILE CARD -->
-                <div class="col-lg-4">
-
-                    <div class="profile-card text-center">
-
-                        <div class="profile-img">
-                            <img src="<%= user.profilePicture?.url || '/uploads/profilePictures/123.jpg' %>">
-                        </div>
-
-                        <h3>
-                            <%= user.fullName.charAt(0).toUpperCase() + user.fullName.slice(1)%>
-                        </h3>
-
-                        <p class="text-muted">@<%= user.username %>
-                        </p>
-
-                        <hr>
-
-                        <p class="member">
-                            Member since <%= user.createdAt.toDateString() %>
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- RIGHT DETAILS -->
-                <div class="col-lg-8">
-
-                    <div class="card details-card">
-
-                        <h5 class="mb-4">Account Information</h5>
-
-                        <div class="row">
-
-                            <div class="col-md-6 mb-3">
-                                <label>First Name</label>
-                                <div class="info-box">
-                                    <%= user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1) %>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label>Last Name</label>
-                                <div class="info-box">
-                                    <%= user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1) %>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label>Email</label>
-                                <div class="info-box">
-                                    <%= user.email %>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label>Phone Number</label>
-                                <div class="info-box">
-                                    <%= user.phone_no %>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label>Gender</label>
-                                <div class="info-box">
-                                    <%= user.gender %>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label>Date of Birth</label>
-                                <div class="info-box">
-                                    <%= user.DOB.toDateString() %>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
+          <p class="text-muted">@<%= user.username %></p>
+          <hr>
+          <p class="member">Member since <%= user.createdAt.toDateString() %></p>
         </div>
+      </div>
 
-    </body>
+      <!-- RIGHT DETAILS -->
+      <div class="col-lg-8">
+        <div class="card details-card">
+          <h5 class="mb-4">Account Information</h5>
+          <div class="row">
 
+            <div class="col-md-6 mb-3">
+              <label>First Name</label>
+              <div class="info-box">
+                <%= user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1) %>
+              </div>
+            </div>
 
-    <style>
-        .profile-wrapper {
-            margin-top: 40px;
-            margin-bottom: 60px;
-        }
+            <div class="col-md-6 mb-3">
+              <label>Last Name</label>
+              <div class="info-box">
+                <%= user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1) %>
+              </div>
+            </div>
 
-        /* header */
+            <div class="col-md-6 mb-3">
+              <label>Email</label>
+              <div class="info-box"><%= user.email %></div>
+            </div>
 
-        .profile-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
+            <div class="col-md-6 mb-3">
+              <label>Phone Number</label>
+              <div class="info-box"><%= user.phone_no %></div>
+            </div>
 
-        /* cards */
+            <div class="col-md-6 mb-3">
+              <label>Gender</label>
+              <div class="info-box"><%= user.gender %></div>
+            </div>
 
-        .profile-card,
-        .details-card {
-            border: none;
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-        }
+            <div class="col-md-6 mb-3">
+              <label>Date of Birth</label>
+              <div class="info-box"><%= user.DOB.toDateString() %></div>
+            </div>
 
-        /* profile image */
+          </div>
+        </div>
+      </div>
 
-        .profile-img {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
+    </div>
+  </div>
+</body>
 
-        .profile-img img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
+<style>
+  .profile-wrapper {
+    margin-top: 40px;
+    margin-bottom: 60px;
+  }
 
-        /* username */
+  /* header */
+  .profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap; /* wrap content if needed */
+  }
 
-        .username {
-            color: #777;
-            margin-bottom: 10px;
-        }
+  .profile-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
 
-        .member-info {
-            font-size: 14px;
-            color: #999;
-        }
+  .profile-btn {
+    min-width: 130px;
+    text-align: center;
+    flex: 1 1 auto;
+  }
 
-        /* info fields */
+  /* cards */
+  .profile-card,
+  .details-card {
+    border: none;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  }
 
-        label {
-            font-weight: 600;
-            color: #555;
-            margin-bottom: 5px;
-        }
+  /* profile image */
+  .profile-img {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
 
-        .info-box {
-            background: #f8f9fa;
-            padding: 10px 12px;
-            border-radius: 10px;
-        }
+  .profile-img img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 
-        /* buttons */
+  label {
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 5px;
+  }
 
-        .btn-danger {
-            background: #ff385c;
-            border: none;
-        }
+  .info-box {
+    background: #f8f9fa;
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
 
-        .btn-danger:hover {
-            background: #e61e4d;
-        }
+  /* buttons */
+  .btn-danger {
+    background: #ff385c;
+    border: none;
+  }
 
-        /* mobile */
+  .btn-danger:hover {
+    background: #e61e4d;
+  }
 
-        @media(max-width:768px) {
+  /* responsive adjustments */
+  @media(max-width:768px) {
+    .profile-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
 
-            .profile-header {
-                flex-direction: column;
-                gap: 10px;
-                align-items: flex-start;
-            }
+    .profile-buttons {
+      width: 100%;
+      flex-direction: column; /* stack buttons below */
+      gap: 10px;
+    }
 
-        }
-    </style>
+    .profile-btn {
+      flex: 1 1 100%; /* full width buttons on mobile */
+    }
+  }
+</style>

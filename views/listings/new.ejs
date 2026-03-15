@@ -1,35 +1,128 @@
 <% layout('/layouts/boilerplate') -%>
 
-    <body>
-        <div class="container mt-3">
-            <div class="row justify-content-center">
-                <div class="col-lg-6 col-md-8 mb-3">
+    <style>
+        .page-wrapper {
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
 
-                    <div class="card shadow-sm">
-                        <div class="card-header">
-                            <h3 class="mb-0">Add New Listing</h3>
-                        </div>
+        /* CARD STYLE */
 
-                        <div class="card-body">
+        .card {
+            border: none;
+            border-radius: 36px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
 
-                            <form action="/listings" method="POST" enctype="multipart/form-data" novalidate
-                                class="needs-validation">
+        .card-header {
+            background: #ff385c;
+            color: white;
+            font-weight: 600;
+            border-top-left-radius: 36px;
+            border-top-right-radius: 36px;
+            padding: 16px 22px;
+        }
 
-                                <div class="mb-3">
-                                    <label for="title" class="form-label">Title</label>
-                                    <input type="text" class="form-control" id="title" name="listing[title]" required>
+        /* INPUTS */
+
+        .form-control,
+        .form-select {
+            border-radius: 12px;
+            padding: 11px;
+        }
+
+        .input-group-text {
+            background: white;
+            border-radius: 12px 0 0 12px;
+        }
+
+        /* LABEL */
+
+        label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 6px;
+        }
+
+        /* BUTTONS */
+
+        .btn-danger {
+            background: #ff385c;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background: #e61e4d;
+        }
+    </style>
+
+
+    <div class="container page-wrapper">
+
+        <div class="row justify-content-center">
+
+            <!-- SMALLER WIDTH -->
+            <div class="col-lg-5 col-md-7">
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <h4 class="mb-0">
+                            <i class="bi bi-plus-circle me-2"></i>
+                            Add New Listing
+                        </h4>
+                    </div>
+
+                    <div class="card-body">
+
+                        <form action="/listings" method="POST" enctype="multipart/form-data" novalidate
+                            class="needs-validation">
+
+                            <!-- TITLE -->
+
+                            <div class="mb-3">
+                                <label>Title</label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-card-text"></i>
+                                    </span>
+
+                                    <input type="text" class="form-control" name="listing[title]" required>
                                 </div>
+                            </div>
 
-                                <div class="mb-3">
-                                    <label for="description" class="form-label">Description</label>
-                                    <textarea class="form-control" id="description" name="listing[description]" rows="3"
+
+                            <!-- DESCRIPTION -->
+
+                            <div class="mb-3">
+                                <label>Description</label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-text-paragraph"></i>
+                                    </span>
+
+                                    <textarea class="form-control" rows="3" name="listing[description]"
                                         required></textarea>
                                 </div>
+                            </div>
 
-                                <div class="mb-3">
-                                    <label for="category" class="form-label">Category</label>
-                                    <select class="form-select" id="category" name="listing[category]" required>
-                                        <option value="">Choose a category...</option>
+
+                            <!-- CATEGORY -->
+
+                            <div class="mb-3">
+                                <label>Category</label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-grid"></i>
+                                    </span>
+
+                                    <select class="form-select" name="listing[category]" required>
+
+                                        <option value="">Choose category...</option>
                                         <option>Rooms</option>
                                         <option>Beachfront</option>
                                         <option>Pools</option>
@@ -38,47 +131,96 @@
                                         <option>Golfing</option>
                                         <option>Iconic Cities</option>
                                         <option>Palaces</option>
+
                                     </select>
+
                                 </div>
+                            </div>
 
-                                <div class="row">
 
-                                    <div class="col-md-4 mb-3">
-                                        <label for="price" class="form-label">Price</label>
-                                        <input type="number" class="form-control" id="price" name="listing[price]"
-                                            required>
+                            <!-- PRICE + LOCATION -->
+
+                            <div class="row">
+
+                                <div class="col-md-4 mb-3">
+                                    <label>Price</label>
+
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-currency-rupee"></i>
+                                        </span>
+
+                                        <input type="number" class="form-control" name="listing[price]" required>
                                     </div>
+                                </div>
 
-                                    <div class="col-md-8 mb-3">
-                                        <label for="location" class="form-label">Location</label>
-                                        <input type="text" class="form-control" id="location" name="listing[location]"
-                                            required>
+
+                                <div class="col-md-8 mb-3">
+                                    <label>Location</label>
+
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="bi bi-geo-alt"></i>
+                                        </span>
+
+                                        <input type="text" class="form-control" name="listing[location]" required>
                                     </div>
-
                                 </div>
 
-                                <div class="mb-3">
-                                    <label for="country" class="form-label">Country</label>
-                                    <input type="text" class="form-control" id="country" name="listing[country]"
-                                        required>
+                            </div>
+
+
+                            <!-- COUNTRY -->
+
+                            <div class="mb-3">
+                                <label>Country</label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-globe"></i>
+                                    </span>
+
+                                    <input type="text" class="form-control" name="listing[country]" required>
                                 </div>
+                            </div>
 
-                                <div class="mb-3">
-                                    <!-- changes here for file upload are type and name attribute. enctype is set in the form tag -->
-                                    <label for="image" class="form-label">Upload Image</label>
-                                    <input type="file" class="form-control" id="image" name="image">
+
+                            <!-- IMAGE -->
+
+                            <div class="mb-3">
+                                <label>Upload Image</label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-image"></i>
+                                    </span>
+
+                                    <input type="file" class="form-control" name="image">
                                 </div>
+                            </div>
 
-                                <div class="d-flex justify-content-between mt-4">
-                                    <button type="submit" class="btn btn-danger">Add</button>
-                                    <a href="/listings" class="btn btn-secondary">Cancel</a>
-                                </div>
 
-                            </form>
+                            <!-- BUTTONS -->
 
-                        </div>
+                            <div class="d-flex justify-content-between mt-4">
+
+                                <button class="btn btn-danger">
+                                    <i class="bi bi-check-circle me-1"></i>
+                                    Add
+                                </button>
+
+                                <a href="/listings" class="btn btn-outline-dark">
+                                    Cancel
+                                </a>
+
+                            </div>
+
+                        </form>
+
                     </div>
                 </div>
+
             </div>
+
         </div>
-    </body>
+    </div>

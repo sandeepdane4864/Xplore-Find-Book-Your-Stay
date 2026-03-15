@@ -61,3 +61,109 @@ module.exports.LogOutUser = (req, res) => {
         res.redirect("/listings");
     });
 }
+
+module.exports.PostResetpassPage = async (req, res) => {
+
+    const user = await User.findOne({
+
+        resetToken: req.params.token,
+        resetTokenExpire: { $gt: Date.now() }
+
+    });
+
+    if (!user) {
+        req.flash("error", "Password reset token is invalid or expired.");
+        return res.redirect("/forgot-password");
+    }
+
+
+    // set new password
+    await user.setPassword(req.body.password);
+
+    user.resetToken = undefined;
+    user.resetTokenExpire = undefined;
+
+    await user.save();
+
+    req.flash("success", "Password reset successful. You can now login.");
+
+    res.redirect("/login");
+
+};
+
+
+module.exports.GetresetPage = async (req, res) => {
+
+    const user = await User.findOne({
+
+        resetToken: req.params.token,
+        resetTokenExpire: { $gt: Date.now() }
+
+
+    });
+    console.log("Token from URL:", req.params.token);
+    console.log("Looking for user:", await User.find({ resetToken: req.params.token }));
+
+    if (!user) {
+        req.flash("error", "Password reset token is invalid or expired.");
+        return res.redirect("/forgot-password");
+    }
+
+    res.render("users/reset", { token: req.params.token });
+
+};
+
+
+module.exports.PostfogotPass = async (req, res) => {
+
+    const user = await User.findOne({ email: req.body.email });
+
+    if (!user) {
+        req.flash("error", "No account with that email found");
+        return res.redirect("/forgot-password");
+    }
+
+
+    // generate reset token
+    const token = crypto.randomBytes(32).toString("hex");
+
+    user.resetToken = token;
+    user.resetTokenExpire = Date.now() + 3600000; // 1 hour
+
+    try {
+        await user.save();
+        console.log("Reset token saved:", user.resetToken);
+    } catch (err) {
+        console.error("Error saving reset token:", err);
+    }
+
+
+    // reset link
+    const resetLink = `http://localhost:3000/reset-password/${token}`;
+
+
+    // send email
+    const sendMail = require("../utils/mailer"); // your SendGrid mailer
+
+    await sendMail(
+        user.email,
+        "Password Reset - Xplore",
+        `
+    <h2>Password Reset</h2>
+    <p>Hello ${user.firstName},</p>
+    <p>You requested a password reset for your Xplore account.</p>
+    <p>Click the button below to reset your password:</p>
+    <a href="${resetLink}" 
+      style="display:inline-block;padding:10px 18px;background:#dc3545;color:white;text-decoration:none;border-radius:5px;">
+      Reset Password
+    </a>
+    <p>This link will expire in 1 hour.</p>
+    <p>If you did not request this, please ignore this email.</p>
+    `
+    );
+
+
+    req.flash("success", "Password reset link sent to your email.");
+    res.redirect("/login");
+
+};

@@ -1,266 +1,210 @@
 <% layout('/layouts/boilerplate') %>
 
-    <style>
-        .price-card {
-            border-radius: 16px;
-            border: 1px solid #e5e5e5;
-            padding: 20px;
-        }
-
-        .listing-img {
-            width: 100px;
-            height: 90px;
-            object-fit: cover;
-            border-radius: 12px;
-        }
-
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .total-price {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .booking-box {
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .booking-box input,
-        .booking-box select {
-            border: none;
-            width: 100%;
-            padding: 10px;
-        }
-
-        .booking-box label {
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .rare-box {
-            background: #f3e7eb;
-            border-radius: 14px;
-            font-weight: 500;
-        }
-    </style>
-
-
-    <div class="container mt-5">
-
+    <div class="container mt-5 mb-5">
         <div class="row g-4">
 
-            <!-- LEFT SIDE -->
+            <!-- Booking Column -->
             <div class="col-lg-7">
+                <div class="booking-box p-4 shadow-sm rounded">
 
-                <h2 class="mb-4">Confirm your booking</h2>
+                    <h3 class="mb-4">Confirm your booking</h3>
 
-                <form action="/create-checkout-session/<%= listing._id %>" method="POST">
+                    <!-- Stripe checkout form -->
+                    <form id="checkout-form" action="/create-checkout-session/<%= listing._id %>" method="POST">
 
-                    <div class="booking-box">
+                        <label for="checkin">CHECK-IN</label>
+                        <input type="date" name="checkIn" id="checkin" required>
 
-                        <div class="row g-0">
+                        <label for="checkout">CHECK-OUT</label>
+                        <input type="date" name="checkOut" id="checkout" required>
 
-                            <div class="col-6 border-end p-2">
+                        <label for="guests">GUESTS</label>
+                        <select name="guests" id="guests">
+                            <option value="1">1 guest</option>
+                            <option value="2">2 guests</option>
+                            <option value="3">3 guests</option>
+                            <option value="4">4 guests</option>
+                            <option value="5">5 guests</option>
+                        </select>
 
-                                <label>CHECK-IN</label>
-                                <input type="date" name="checkIn" id="checkin" required>
+                        <button type="submit" class="btn-confirm mt-3 w-100">Confirm & Pay</button>
+                    </form>
 
-                            </div>
-
-                            <div class="col-6 p-2">
-
-                                <label>CHECK-OUT</label>
-                                <input type="date" name="checkOut" id="checkout" required>
-
-                            </div>
-
-                        </div>
-
-                        <div class="border-top p-2">
-
-                            <label>GUESTS</label>
-
-                            <select name="guests" id="guests">
-                                <option value="1">1 guest</option>
-                                <option value="2">2 guests</option>
-                                <option value="3">3 guests</option>
-                                <option value="4">4 guests</option>
-                                <option value="5">5 guests</option>
-                            </select>
-
-                        </div>
-
-                    </div>
-
-                    <button  onclick="confirmBooking()" class="btn btn-danger w-100 mt-4 rounded-pill py-2">
-                        Confirm & Pay
-                    </button>
-
-                </form>
-
+                </div>
             </div>
 
+            <!-- Price Summary Column -->
+            <div class="col-lg-5">
+                <div class="price-card p-4 shadow-sm rounded">
 
-            <!-- RIGHT SIDE -->
-            <div class="col-lg-5 mb-4 ">
-
-                <div class="price-card">
-
-                    <!-- Listing -->
                     <div class="d-flex mb-3">
-
                         <img src="<%= listing.image.url %>" class="listing-img me-3">
-
                         <div>
                             <h5 class="mb-1">
                                 <%= listing.title %>
                             </h5>
-
-                            <small class="text-muted">
-                                ⭐ 4.92 (174) · Guest favourite
-                            </small>
+                            <small class="text-muted">⭐ 4.92 · Guest favourite</small>
                         </div>
-
                     </div>
 
                     <hr>
 
-                    <!-- Free Cancellation -->
-                    <h6 class="fw-bold">Free cancellation</h6>
-
-                    <p class="text-muted small mb-2">
-                        Cancel anytime before check-in for a full refund.
-                        <br>
-                        <a href="#" class="text-dark fw-semibold">Full policy</a>
-                    </p>
+                    <div class="summary-header fw-bold mb-2">Dates & Guests</div>
+                    <p id="summaryDates">Select dates</p>
+                    <p id="summaryGuests">1 guest</p>
 
                     <hr>
 
-                    <!-- Dates -->
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-
-                        <div>
-                            <h6 class="fw-bold mb-0">Dates</h6>
-                            <small class="text-muted" id="dateDisplay">
-                                Select dates
-                            </small>
-                        </div>
-
-                        <button class="btn btn-light btn-sm" onclick="focusDates()" type="button">
-                            Change
-                        </button>
-
-                    </div>
-
-                    <hr>
-
-                    <!-- Guests -->
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-
-                        <div>
-                            <h6 class="fw-bold mb-0">Guests</h6>
-                            <small class="text-muted" id="guestDisplay">
-                                1 guest
-                            </small>
-                        </div>
-
-                        <button class="btn btn-light btn-sm" onclick="focusGuests()" type="button">
-                            Change
-                        </button>
-
-                    </div>
-
-                    <hr>
-
-                    <!-- Price details -->
-                    <h6 class="fw-bold">Price details</h6>
-
-                    <div class="price-row">
-                        <span id="price">₹<%= listing.price %> × <span id="nights">0</span> nights</span>
+                    <div class="summary-header fw-bold mb-2">Price details</div>
+                    <div class="price-row d-flex justify-content-between mb-2">
+                        <span id="priceDetail">₹<%= listing.price %> × <span id="nights">0</span> nights</span>
                         <span id="subtotal">₹0</span>
                     </div>
-
-                    <div class="price-row">
+                    <div class="price-row d-flex justify-content-between mb-2">
                         <span>Taxes</span>
                         <span id="tax">₹0</span>
                     </div>
-
                     <hr>
-
-                    <div class="price-row total-price">
+                    <div class="price-row d-flex justify-content-between total-price fw-bold">
                         <span>Total INR</span>
                         <span id="total">₹0</span>
                     </div>
 
                 </div>
-
-
             </div>
 
         </div>
-
     </div>
 
+    <style>
+        .booking-box input,
+        .booking-box select {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0 15px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+        }
+
+        .btn-confirm {
+            background: #ff385c;
+            color: white;
+            font-weight: 600;
+            border-radius: 50px;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+        }
+
+        .btn-confirm:hover {
+            background: #e61e4d;
+        }
+
+        .listing-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .price-card,
+        .booking-box {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        @media(max-width:768px) {
+
+            .col-lg-7,
+            .col-lg-5 {
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
 
     <script>
-
-        const price = <%= listing.price %>;
+        const pricePerNight = <%= listing.price %>;
 
         const checkin = document.getElementById("checkin");
         const checkout = document.getElementById("checkout");
         const guests = document.getElementById("guests");
+        const checkoutForm = document.getElementById("checkout-form");
 
         const nightsEl = document.getElementById("nights");
         const subtotalEl = document.getElementById("subtotal");
         const taxEl = document.getElementById("tax");
         const totalEl = document.getElementById("total");
 
-        const dateDisplay = document.getElementById("dateDisplay");
-        const guestDisplay = document.getElementById("guestDisplay");
+        const summaryDates = document.getElementById("summaryDates");
+        const summaryGuests = document.getElementById("summaryGuests");
+
+        // Set minimum check-in date to today
+        const today = new Date().toISOString().split("T")[0];
+        checkin.setAttribute("min", today);
+
+        // Update checkout min dynamically
+        checkin.addEventListener("change", () => {
+            const checkinDate = new Date(checkin.value);
+            checkout.value = "";
+            checkout.setAttribute("min", checkin.value);
+            calculate();
+        });
+
+        checkout.addEventListener("change", () => {
+            const checkinDate = new Date(checkin.value);
+            const checkoutDate = new Date(checkout.value);
+
+            if (checkoutDate <= checkinDate) {
+                alert("Check-out date must be after check-in.");
+                checkout.value = "";
+            } else {
+                calculate();
+            }
+        });
+
+        guests.addEventListener("change", () => {
+            summaryGuests.innerText = guests.value + " guest" + (guests.value > 1 ? "s" : "");
+        });
+
+        // Validate dates before form submission
+        checkoutForm.addEventListener("submit", (e) => {
+            const checkinDate = new Date(checkin.value);
+            const checkoutDate = new Date(checkout.value);
+            const todayDate = new Date(today);
+
+            if (checkinDate < todayDate) {
+                e.preventDefault();
+                alert("Check-in cannot be in the past.");
+                return false;
+            }
+
+            if (checkoutDate <= checkinDate) {
+                e.preventDefault();
+                alert("Check-out date must be after check-in.");
+                return false;
+            }
+        });
 
         function calculate() {
-
             if (!checkin.value || !checkout.value) return;
 
             const start = new Date(checkin.value);
             const end = new Date(checkout.value);
-
-            const diff = (end - start) / (1000 * 60 * 60 * 24);
-
+            const diff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
             if (diff <= 0) return;
 
-            const subtotal = diff * price;
-            const tax = subtotal * 0.1;
+            const subtotal = diff * pricePerNight;
+            const tax = Math.round(subtotal * 0.1);
             const total = subtotal + tax;
 
             nightsEl.innerText = diff;
             subtotalEl.innerText = "₹" + subtotal;
-            taxEl.innerText = "₹" + Math.round(tax);
-            totalEl.innerText = "₹" + Math.round(total);
+            taxEl.innerText = "₹" + tax;
+            totalEl.innerText = "₹" + total;
 
-            dateDisplay.innerText = checkin.value + " – " + checkout.value;
-
+            summaryDates.innerText = checkin.value + " – " + checkout.value;
         }
-
-        function focusDates() {
-            checkin.focus();
-        }
-
-        function focusGuests() {
-            guests.focus();
-        }
-
-        guests.addEventListener("change", () => {
-            guestDisplay.innerText = guests.value + " guest";
-        });
-
-        checkin.addEventListener("change", calculate);
-        checkout.addEventListener("change", calculate);
-
     </script>

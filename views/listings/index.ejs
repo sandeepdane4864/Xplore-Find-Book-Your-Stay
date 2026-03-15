@@ -1,189 +1,165 @@
 <% layout('/layouts/boilerplate') -%>
-  <style>
-    .category-filter {
-      color: black;
-      font-size: 14px;
-      border-radius: 8px;
-      transition: all 0.2s ease;
-    }
+<style>
+  .category-filter {
+    color: black;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
 
-    .category-filter:hover {
-      background-color: #f8f9fa;
-    }
+  .category-filter:hover {
+    background-color: #f8f9fa;
+  }
 
-    .category-filter.active i {
-      background-color: white;
-      /* Bootstrap danger color */
-      color: #dc3545 !important;
-      font-weight: 600;
-      border-radius: 8px;
-    }
+  .category-filter.active i {
+    background-color: white;
+    color: #dc3545 !important;
+    font-weight: 600;
+    border-radius: 8px;
+  }
 
-   @media (max-width: 991px) {
-
+  @media (max-width: 991px) {
     .filterallicon {
-
       margin-top: 15px;
-
     }
   }
 
-  .tax-switch{
-  border:1px solid #e5e5e5;
-  border-radius:30px;
-  padding:6px 14px;
-  background:white;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
+  .tax-switch {
+    border: 1px solid #e5e5e5;
+    border-radius: 30px;
+    padding: 6px 14px;
+    background: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-/* Remove bootstrap default spacing */
-.tax-switch.form-check{
-  padding-left:12px;
-  margin-bottom:0;
-  font-weight: 600;
-  font-size: 19px;
-}
+  .tax-switch.form-check {
+    padding-left: 12px;
+    margin-bottom: 0;
+    font-weight: 600;
+    font-size: 19px;
+  }
 
-.tax-switch .form-check-input{
-  margin:0;
-}
+  .tax-switch .form-check-input {
+    margin: 0;
+  }
 
-.tax-switch .form-check-label{
-  margin:0;
-}
-   
-  </style>
+  .tax-switch .form-check-label {
+    margin: 0;
+  }
+</style>
 
-  <body>
+<body>
+  <!-- Categories -->
+  <section id="icons">
+    <div class="container mt-4">
+      <div class="row text-center g-1">
+        <div class="col-4 col-sm-4 col-md-3 col-lg-1">
+          <a href="/listings?category=all" class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'all' ? 'active' : '' %>">
+            <i class="fas fa-fire mb-2"></i>
+            <div>Trending</div>
+          </a>
+        </div>
 
-    <section id="icons">
-      <div class="container mt-4">
-        <div class="row text-center g-1">
+        <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+          <a href="/listings?category=Rooms" class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Rooms' ? 'active' : '' %>">
+            <i class="fas fa-home mb-2"></i>
+            <div>Rooms</div>
+          </a>
+        </div>
 
-          <div class="col-4 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=all"
-              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'all' ? 'active' : '' %>">
-              <i class="fas fa-fire mb-2"></i>
-              <div>Trending</div>
-            </a>
-          </div>
+        <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+          <a href="/listings?category=Beachfront" class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Beachfront' ? 'active' : '' %>">
+            <i class="fas fa-umbrella-beach mb-2"></i>
+            <div>Beachfront</div>
+          </a>
+        </div>
 
-          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=Rooms"
-              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Rooms' ? 'active' : '' %>">
-              <i class="fas fa-home mb-2"></i>
-              <div>Rooms</div>
-            </a>
-          </div>
+        <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+          <a href="/listings?category=Pools" class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Pools' ? 'active' : '' %>">
+            <i class="fas fa-swimmer mb-2"></i>
+            <div>Pools</div>
+          </a>
+        </div>
 
-          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=Beachfront"
-              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Beachfront' ? 'active' : '' %>">
-              <i class="fas fa-umbrella-beach mb-2"></i>
-              <div>Beachfront</div>
-            </a>
-          </div>
+        <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+          <a href="/listings?category=Castles" class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Castles' ? 'active' : '' %>">
+            <i class="fas fa-chess-rook mb-2"></i>
+            <div>Castles</div>
+          </a>
+        </div>
 
-          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=Pools"
-              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Pools' ? 'active' : '' %>">
-              <i class="fas fa-swimmer mb-2"></i>
-              <div>Pools</div>
-            </a>
-          </div>
+        <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+          <a href="/listings?category=Boat House" class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Boat House' ? 'active' : '' %>">
+            <i class="fas fa-ship mb-2"></i>
+            <div>Boat House</div>
+          </a>
+        </div>
 
-          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=Castles"
-              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Castles' ? 'active' : '' %>">
-              <i class="fas fa-chess-rook mb-2"></i>
-              <div>Castles</div>
-            </a>
-          </div>
+        <div class="col-6 col-sm-4 col-md-3 col-lg-1 ">
+          <a href="/listings?category=Golfing" class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Golfing' ? 'active' : '' %>">
+            <i class="fas fa-golf-ball mb-2"></i>
+            <div>Golfing</div>
+          </a>
+        </div>
 
-          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=Boat House"
-              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Boat House' ? 'active' : '' %>">
-              <i class="fas fa-ship mb-2"></i>
-              <div>Boat House</div>
-            </a>
-          </div>
+        <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+          <a href="/listings?category=Iconic Cities" class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Iconic Cities' ? 'active' : '' %>">
+            <i class="fas fa-city mb-2"></i>
+            <div>Iconic Cities</div>
+          </a>
+        </div>
 
-          <div class="col-6 col-sm-4 col-md-3 col-lg-1 ">
-            <a href="/listings?category=Golfing"
-              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Golfing' ? 'active' : '' %>">
-              <i class="fas fa-golf-ball mb-2"></i>
-              <div>Golfing</div>
-            </a>
-          </div>
+        <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+          <a href="/listings?category=Palaces" class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Palaces' ? 'active' : '' %>">
+            <i class="fas fa-landmark mb-2"></i>
+            <div>Palaces</div>
+          </a>
+        </div>
 
-          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=Iconic Cities"
-              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Iconic Cities' ? 'active' : '' %>">
-              <i class="fas fa-city mb-2"></i>
-              <div>Iconic Cities</div>
-            </a>
-          </div>
-
-          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
-            <a href="/listings?category=Palaces"
-              class="category-filter text-decoration-none d-block py-2 <%= selectedCategory === 'Palaces' ? 'active' : '' %>">
-              <i class="fas fa-landmark mb-2"></i>
-              <div>Palaces</div>
-            </a>
-          </div>
-
-          <div class="col-6 col-sm-4 col-md-3 col-lg-1">
-            <button class="btn btn-light border filter-btn filterallicon">
-              <i class="bi bi-sliders me-2"></i> Filters
-            </button>
-          </div>
-
+        <div class="col-6 col-sm-4 col-md-3 col-lg-1">
+          <button class="btn btn-light border filter-btn filterallicon">
+            <i class="bi bi-sliders me-2"></i> Filters
+          </button>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section>
-      <div class="container">
-        <div class="d-flex justify-content-between align-items-center flex-wrap">
-          <h2 class="header">All listings</h2>
-          <div class="d-flex align-items-center gap-3">
-
-
-
-            <div class="form-check form-switch tax-switch">
-
-              <label class="form-check-label me-2 small" for="switchCheckDefault">
-                Price after taxes
-              </label>
-
-              <input class="form-check-input" type="checkbox" id="switchCheckDefault">
-
-            </div>
-
+  <!-- Listings -->
+  <section>
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <h2 class="header">All listings</h2>
+        <div class="d-flex align-items-center gap-3">
+          <div class="form-check form-switch tax-switch">
+            <label class="form-check-label me-2 small" for="switchCheckDefault">Price after taxes</label>
+            <input class="form-check-input" type="checkbox" id="switchCheckDefault">
           </div>
         </div>
-        <div class="row">
+      </div>
+
+      <div class="row">
+        <% if (all_listings.length === 0) { %>
+          <div class="col-12 text-center my-5">
+            <h4>No results found</h4>
+            <% if(selectedCategory && selectedCategory !== 'all'){ %>
+              <p>Category: <%= selectedCategory %></p>
+            <% } %>
+            <a href="/listings" class="btn btn-danger mt-3">View All Listings</a>
+          </div>
+        <% } else { %>
           <% for(let list of all_listings){ %>
-            <div class=" col-sm-12 col-md-4 col-lg-3 mb-4 d-flex">
-              <div class="card w-100 text-wrap indexlist ">
-                <img src="<%= list.image.url %>" class="card-img-top" alt="..."
-                  onclick="window.location.href='/listings/<%= list._id %>'">
+            <div class="col-sm-12 col-md-4 col-lg-3 mb-4 d-flex">
+              <div class="card w-100 text-wrap indexlist">
+                <img src="<%= list.image.url %>" class="card-img-top" alt="..." onclick="window.location.href='/listings/<%= list._id %>'">
                 <div class="card-body">
-                  <h5 class="card-title">
-                    <%= list.title %>
-                  </h5>
+                  <h5 class="card-title"><%= list.title %></h5>
                   <h6 class="price" data-base="<%= list.price %>" data-tax="<%= Math.round(list.price*1.1) %>">
-
-                    Price ₹
-                    <span class="price-value">
-                      <%= list.price.toLocaleString("en-IN") %>
-                    </span>/night
-
+                    Price ₹<span class="price-value"><%= list.price.toLocaleString("en-IN") %></span>/night
                   </h6>
-                  <p class="location">Location: <%= list.location %>, <%= list.country %>
-                  </p>
+                  <p class="location">Location: <%= list.location %>, <%= list.country %></p>
                   <div class="btns">
                     <form action="/listings/<%=list._id%>" method="get" class="d-inline">
                       <button type="submit" class="btn btn-danger btn-sm">Rent</button>
@@ -191,87 +167,57 @@
                     <a href="/listings/<%=list._id%>" class="btn btn-outline-danger btn-sm">View</a>
                   </div>
                 </div>
-
               </div>
             </div>
-            <% } %>
-        </div>
+          <% } %>
+        <% } %>
       </div>
+
+      <% if (all_listings.length > 0) { %>
       <div class="d-flex justify-content-center mt-4">
         <nav aria-label="Listings pages">
           <ul class="pagination flex-wrap justify-content-center">
-
-            <% if(currentPage> 1){ %>
+            <% if(currentPage > 1){ %>
               <li class="page-item">
                 <a class="page-link" href="/listings?page=<%= currentPage-1 %>">← Prev</a>
               </li>
+            <% } %>
+
+            <% for(let i=1; i <= totalPages; i++){ %>
+              <% if(i === currentPage){ %>
+                <li class="page-item active"><span class="page-link"><%= i %></span></li>
+              <% } else if(i===1 || i===totalPages || (i>=currentPage-1 && i<=currentPage+1)){ %>
+                <li class="page-item"><a class="page-link" href="/listings?page=<%= i %>"><%= i %></a></li>
+              <% } else if(i===currentPage-2 || i===currentPage+2){ %>
+                <li class="page-item disabled"><span class="page-link">...</span></li>
               <% } %>
+            <% } %>
 
-                <% for(let i=1; i <=totalPages; i++){ %>
-
-                  <% if(i===currentPage){ %>
-                    <li class="page-item active">
-                      <span class="page-link">
-                        <%= i %>
-                      </span>
-                    </li>
-
-                    <% } else if(i===1 || i===totalPages || (i>= currentPage-1 && i <= currentPage+1)){ %>
-                        <li class="page-item">
-                          <a class="page-link" href="/listings?page=<%= i %>">
-                            <%= i %>
-                          </a>
-                        </li>
-
-                        <% } else if(i===currentPage-2 || i===currentPage+2){ %>
-                          <li class="page-item disabled">
-                            <span class="page-link">...</span>
-                          </li>
-                          <% } %>
-
-                            <% } %>
-
-                              <% if(currentPage < totalPages){ %>
-                                <li class="page-item">
-                                  <a class="page-link" href="/listings?page=<%= currentPage+1 %>">Next →</a>
-                                </li>
-                                <% } %>
-
+            <% if(currentPage < totalPages){ %>
+              <li class="page-item">
+                <a class="page-link" href="/listings?page=<%= currentPage+1 %>">Next →</a>
+              </li>
+            <% } %>
           </ul>
         </nav>
       </div>
-    </section>
-    <script>
+      <% } %>
 
-      const taxSwitch = document.getElementById("switchCheckDefault");
+    </div>
+  </section>
 
-      if (taxSwitch) {
-
-        taxSwitch.addEventListener("change", () => {
-
-          const prices = document.querySelectorAll(".price");
-
-          prices.forEach(price => {
-
-            const base = price.dataset.base;
-            const tax = price.dataset.tax;
-
-            const priceText = price.querySelector(".price-value");
-
-            if (taxSwitch.checked) {
-              priceText.innerText = Number(tax).toLocaleString("en-IN");
-            }
-            else {
-              priceText.innerText = Number(base).toLocaleString("en-IN");
-            }
-
-          });
-
+  <script>
+    const taxSwitch = document.getElementById("switchCheckDefault");
+    if (taxSwitch) {
+      taxSwitch.addEventListener("change", () => {
+        const prices = document.querySelectorAll(".price");
+        prices.forEach(price => {
+          const base = price.dataset.base;
+          const tax = price.dataset.tax;
+          const priceText = price.querySelector(".price-value");
+          priceText.innerText = taxSwitch.checked ? Number(tax).toLocaleString("en-IN") : Number(base).toLocaleString("en-IN");
         });
-
-      }
-
-    </script>
-
-
-  </body>
+      });
+    }
+  </script>
+</body>

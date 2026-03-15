@@ -10,11 +10,15 @@ const { IsloggedIn } = require("../middleware.js");
 const profileController = require("../controllers/profile.js")
 
 // Profile Page
-router.get("/", IsloggedIn,(profileController.getProfilePage) );
+router.get("/", IsloggedIn, (profileController.getProfilePage));
 
-router.get("/edit", IsloggedIn,(profileController.getEditProfilepage) );
+router.get("/change-password", IsloggedIn, (profileController.getchangepasswordpage));
 
-router.put("/edit", IsloggedIn, upload.single("profilePicture"),(profileController.editProfiledetails) );
+router.post("/change-password", IsloggedIn,(profileController.postchangepassword));
+
+router.get("/edit", IsloggedIn, (profileController.getEditProfilepage));
+
+router.put("/edit", IsloggedIn, upload.single("profilePicture"), (profileController.editProfiledetails));
 
 
 module.exports = router;

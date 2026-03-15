@@ -13,7 +13,6 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
-const bookingsRoutes = require("./routes/bookings");
 const profileRoutes = require('./routes/profile');
 const sessionOptions = {
     secret: process.env.SESSION_SECRET,
@@ -56,6 +55,7 @@ const ExpressError = require("./utils/ExpressError");
 const listingRoutes = require("./routes/listings");
 const userRoutes = require("./routes/users");
 const user = require("./models/user");
+const bookingsRoutes = require("./routes/bookings"); 
 
 // DATABASE CONNECTION
 const mongo_URL = process.env.ATLAS_URL;
@@ -92,7 +92,7 @@ app.get("/", (req, res) => {
 // USE ROUTERS
 app.use("/listings", listingRoutes);
 app.use("/", userRoutes);
-app.use("/bookings", bookingsRoutes);
+app.use("/", bookingsRoutes);
 app.use("/profile", profileRoutes );
 
 

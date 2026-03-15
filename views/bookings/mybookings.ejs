@@ -1,0 +1,110 @@
+<% layout('/layouts/boilerplate') %>
+
+    <style>
+    
+
+        .booking-card {
+            display: flex;
+            flex-wrap: wrap;
+            border-radius: 16px;
+            border: 1px solid #e5e5e5;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s;
+        }
+
+        .booking-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .booking-img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .booking-details {
+            padding: 15px 20px;
+            flex: 1;
+        }
+
+        .booking-details h5 {
+            margin-bottom: 8px;
+        }
+
+        .booking-info {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 6px;
+        }
+
+        .booking-status {
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .status-paid {
+            color: #28a745;
+        }
+
+        .status-pending {
+            color: #ffc107;
+        }
+
+        .status-failed {
+            color: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .booking-card {
+                flex-direction: column;
+            }
+
+            .booking-img {
+                width: 100%;
+                height: 200px;
+            }
+        }
+    </style>
+
+    <div class="container mt-4 mb-5">
+        <h2 class="mb-4">My Bookings</h2>
+
+        <% if (!bookings || bookings.length===0) { %>
+            <p>You have no bookings yet.</p>
+            <% } else { %>
+                <% bookings.forEach(booking=> { %>
+                    <div class="booking-card">
+                        <img src="<%= booking.listing?.image?.url || '/uploads/listings/default.jpg' %>"
+                            class="booking-img" alt="<%= booking.listing?.title %>">
+
+                        <div class="booking-details">
+                            <h5>
+                                <%= booking.listing?.title || "Listing Deleted" %>
+                            </h5>
+
+                            <p class="booking-info">
+                                Dates: <%= booking.checkIn.toDateString() %> - <%= booking.checkOut.toDateString() %>
+                            </p>
+
+                            <p class="booking-info">
+                                Guests: <%= booking.guests %> | Nights: <%= booking.nights %>
+                            </p>
+
+                            <p class="booking-info">
+                                Total: ₹<%= booking.totalPrice?.toLocaleString("en-IN") || "0" %>
+                            </p>
+
+                            <p class="booking-status 
+                        <%= booking.paymentStatus === 'paid' ? 'status-paid' : 
+                            booking.paymentStatus === 'pending' ? 'status-pending' : 'status-failed' %>">
+                                Payment: <%= booking.paymentStatus?.charAt(0).toUpperCase() +
+                                    booking.paymentStatus?.slice(1) || 'Pending' %>
+                            </p>
+                        </div>
+                    </div>
+                    <% }) %>
+                        <% } %>
+    </div>

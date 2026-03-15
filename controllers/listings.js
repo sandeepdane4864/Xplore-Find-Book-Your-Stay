@@ -2,9 +2,8 @@ const Listing = require("../models/listing");
 const Review = require("../models/review.js");
 const fs = require("fs");
 
-
 module.exports.indexcontroller = async (req, res) => {
-    let { page = 1, category } = req.query;
+    let { page = 1, category, q } = req.query;
 
     page = parseInt(page);
     const limit = 12;
@@ -15,6 +14,16 @@ module.exports.indexcontroller = async (req, res) => {
     // Category Filter
     if (category && category !== "all") {
         filter.category = category;
+    }
+
+    // Search Filter
+    if (q && q.trim() !== "") {
+        const searchRegex = new RegExp(q.trim(), "i"); // case-insensitive
+        filter.$or = [
+            { title: searchRegex },
+            { location: searchRegex },
+            { country: searchRegex },
+        ];
     }
 
     const totalListings = await Listing.countDocuments(filter);
@@ -29,9 +38,9 @@ module.exports.indexcontroller = async (req, res) => {
         currentPage: page,
         totalPages,
         selectedCategory: category || "all",
+        searchQuery: q || "", // so you can keep the search box filled
     });
 };
-
 
 module.exports.getNewlistingPage = (req, res) => { res.render("listings/new.ejs"); }
 
@@ -158,7 +167,7 @@ module.exports.deleteReview = async (req, res) => {
 };
 
 
-module.exports.getCheckoutPage =async (req, res) => {
+module.exports.getCheckoutPage = async (req, res) => {
 
     const listing = await Listing.findById(req.params.id);
 
@@ -195,3 +204,9 @@ module.exports.getCheckoutPage =async (req, res) => {
     });
 
 };
+
+module.exports.GetmylistingsPage = async (req, res) => {
+    const listings = await Listing.find({ owner: req.user._id }).populate("owner");;
+    res.render("listings/my-listings", { listings });
+} ;
+

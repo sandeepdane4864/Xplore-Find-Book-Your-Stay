@@ -1,6 +1,7 @@
 <% layout('/layouts/boilerplate') -%>
-<style>
-  .site-logo {
+
+  <style>
+    .site-logo {
       width: 60px;
       height: 60px;
       object-fit: contain;
@@ -11,25 +12,60 @@
       color: #dc3545;
       letter-spacing: 1px;
     }
-</style>
+
+    .input-group-text {
+      cursor: pointer;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .divider hr {
+      flex: 1;
+    }
+
+    .divider span {
+      padding: 0 10px;
+      font-size: 14px;
+      color: #777;
+    }
+
+    .google-btn {
+      border-radius: 8px;
+      font-weight: 500;
+    }
+  </style>
+
 
   <body>
+
     <div class="container lists pt-3 mt-3">
+
+      <!-- LOGO -->
+
       <div class="row align-items-center justify-content-center mb-3">
+
         <div class="col-auto">
           <img src="/images/logo.png" alt="Xplore Logo" class="site-logo">
         </div>
+
         <div class="col-auto text-start">
           <h2 class="site-title mb-0">Xplore</h2>
           <p class="text-muted small mb-0">Find and share amazing places to stay</p>
         </div>
+
       </div>
 
+
       <div class="row justify-content-center">
+
         <div class="col-12 col-sm-11 col-md-8 col-lg-6 col-xl-5 mb-5 mt-4">
 
-
-          <div class="card mb-4 mt-0 shadow-sm pt-0">
+          <div class="card shadow-sm">
 
             <div class="card-header">
               <h3 class="mb-0">Login</h3>
@@ -39,37 +75,137 @@
 
               <form action="/login" method="POST" novalidate class="needs-validation">
 
-                <!-- EMAIL -->
+                <!-- USERNAME -->
+
                 <div class="mb-3">
+
                   <label class="form-label">Username</label>
-                  <input type="string" name="username" class="form-control" placeholder="Enter your Username" required>
+
+                  <input type="text" name="username" class="form-control" placeholder="Enter your Username" required>
+
                 </div>
+
 
                 <!-- PASSWORD -->
-                <div class="mb-3">
+
+                <div class="mb-2">
+
                   <label class="form-label">Password</label>
-                  <input type="password" name="password" class="form-control" placeholder="Enter your password"
-                    required>
+
+                  <div class="input-group">
+
+                    <input type="password" id="loginPassword" name="password" class="form-control"
+                      placeholder="Enter your password" required>
+
+                    <span class="input-group-text" onclick="togglePassword('loginPassword', this)">
+
+                      <i class="bi bi-eye"></i>
+
+                    </span>
+
+                  </div>
+
                 </div>
 
-                <!-- BUTTONS -->
-                <div class="d-flex justify-content-between align-items-center">
+
+                <!-- FORGOT PASSWORD -->
+
+                <div class="text-end mb-3">
+
+                  <a href="/forgot-password" class="small text-danger text-decoration-none">
+
+                    Forgot Password?
+
+                  </a>
+
+                </div>
+
+
+                <!-- LOGIN BUTTON -->
+
+                <div class="d-grid mb-2">
+
                   <button type="submit" class="btn btn-danger">
+
                     Login
+
                   </button>
 
-                  <a href="/signup" class="btn btn-outline-secondary">
-                    Create Account
-                  </a>
                 </div>
+
+
+                <!-- DIVIDER -->
+
+                <div class="divider">
+
+                  <hr>
+                  <span>OR</span>
+                  <hr>
+
+                </div>
+
+
+                <!-- GOOGLE LOGIN -->
+
+                <div class="d-grid mb-3">
+
+                  <a href="/auth/google" class="btn btn-outline-dark google-btn">
+
+                    <i class="bi bi-google me-2"></i>
+
+                    Continue with Google
+
+                  </a>
+
+                </div>
+
+
+                <!-- SIGNUP -->
+
+                <div class="text-center">
+
+                  <span class="text-muted">Don't have an account?</span>
+
+                  <a href="/signup" class="text-danger fw-semibold text-decoration-none">
+
+                    Create Account
+
+                  </a>
+
+                </div>
+
 
               </form>
 
             </div>
+
           </div>
 
         </div>
+
       </div>
+
     </div>
 
+
+    <script>
+
+      function togglePassword(inputId, element) {
+
+        const input = document.getElementById(inputId);
+        const icon = element.querySelector("i");
+
+        if (input.type === "password") {
+          input.type = "text";
+          icon.classList.replace("bi-eye", "bi-eye-slash");
+        } else {
+          input.type = "password";
+          icon.classList.replace("bi-eye-slash", "bi-eye");
+        }
+
+      }
+
+    </script>
+
   </body>
+  
