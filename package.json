@@ -2,18 +2,17 @@
   "engines": {
     "node": " v22.17.0vexi"
   },
-  "name": "new-project",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
   "author": "Sandeep Dane",
   "type": "commonjs",
-  "main": "index.js",
+  "name": "xplore-book-your-stay",
+  "main": "app.js", 
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js", 
+    "dev": "nodemon app.js"
   },
-
-
   "dependencies": {
     "@sendgrid/mail": "^8.1.6",
     "bootstrap-icons": "^1.13.1",
