@@ -14,23 +14,23 @@ async function seedDB() {
         }
 
         await mongoose.connect(mongoURL);
-        console.log("✅ Connected to MongoDB Atlas");
+        console.log("Connected to MongoDB Atlas");
 
         // Clear old data
         await Listing.deleteMany({});
-        console.log("🗑️ Old data deleted");
+        console.log("Old data deleted");
 
         // Insert new data
         initdata.data = initdata.data.map((obj)=>({...obj, owner: "69b3faec00ec99a54297dbba"})
         );
         await Listing.insertMany(initdata.data);
 
-        console.log("🎉 Sample Data Inserted Successfully");
+        console.log("Sample Data Inserted Successfully");
     } catch (err) {
-        console.error("❌ Error seeding database:", err);
+        console.error("Error seeding database:", err);
     } finally {
         await mongoose.connection.close();
-        console.log("🔌 Connection Closed");
+        console.log("Connection Closed");
     }
 }
 

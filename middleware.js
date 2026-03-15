@@ -1,4 +1,5 @@
 const { userSchema } = require("./schema");
+const { listingSchema } = require("./schema");
 const ExpressError = require("./utils/ExpressError");
 
 module.exports.IsloggedIn = (req, res, next) => {

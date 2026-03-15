@@ -16,13 +16,15 @@ router.route("/")
 
 // New form
 router.get("/new", SaveReturnTo, IsloggedIn, (listingControllers.getNewlistingPage));
+//mylistings page 
+router.get("/my-listings", SaveReturnTo, IsloggedIn, (listingControllers.GetmylistingsPage));
 
 // Show single listing
 router.route("/:id")
   .get(wrapAsync(listingControllers.showListing))
   // Update listing
   .put(SaveReturnTo, IsloggedIn, isOwner, upload.single("image"), validateListing, wrapAsync(listingControllers.updateListing))
-   // delete listing  and also assosiated image file
+  // delete listing  and also assosiated image file
   .delete(SaveReturnTo, IsloggedIn, isOwner, wrapAsync(listingControllers.deleteListing));
 
 // Edit form
@@ -33,9 +35,6 @@ router.post("/:id/reviews", IsloggedIn, wrapAsync(listingControllers.addReview))
 
 // Delete review
 router.delete("/:id/reviews/:reviewId", IsloggedIn, isReviewAuthor, wrapAsync(listingControllers.deleteReview));
-
-//mylistings page 
-router.get("/my-listings", SaveReturnTo, IsloggedIn, (listingControllers.GetmylistingsPage));
 
 router.get("/:id/checkout", IsloggedIn, SaveReturnTo, wrapAsync(listingControllers.getCheckoutPage));
 
