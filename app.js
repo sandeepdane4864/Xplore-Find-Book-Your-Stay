@@ -9,17 +9,31 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const MongoStore = require('connect-mongo').default;
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const profileRoutes = require('./routes/profile');
+
+// create mongo session
+const store = MongoStore.create({
+    mongoUrl: process.env.ATLAS_URL, // your MongoDB connection string
+    crypto: { secret: process.env.SESSION_SECRET },
+    touchAfter: 24 * 3600 // lazy update session every 24 hours
+});
+
+store.on("error", (err) => {
+    console.log("Unable to connect with Mongo session", err);
+});
+
 const sessionOptions = {
+    store,
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
-        expires: Date.now() + 1000 * 60 * 60 * 24,
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24), // 1 day
         maxAge: 1000 * 60 * 60 * 24,
         httpOnly: true,
     }
@@ -55,7 +69,7 @@ const ExpressError = require("./utils/ExpressError");
 const listingRoutes = require("./routes/listings");
 const userRoutes = require("./routes/users");
 const user = require("./models/user");
-const bookingsRoutes = require("./routes/bookings"); 
+const bookingsRoutes = require("./routes/bookings");
 
 // DATABASE CONNECTION
 const mongo_URL = process.env.ATLAS_URL;
@@ -93,7 +107,7 @@ app.get("/", (req, res) => {
 app.use("/listings", listingRoutes);
 app.use("/", userRoutes);
 app.use("/", bookingsRoutes);
-app.use("/profile", profileRoutes );
+app.use("/profile", profileRoutes);
 
 
 // 404 HANDLER
