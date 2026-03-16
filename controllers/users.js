@@ -81,9 +81,9 @@ module.exports.PostfogotPass = async (req, res) => {
         await user.save();
 
         console.log("Reset token saved:", user.resetToken, user.resetTokenExpire);
-
+        const baseUrl = process.env.BASE_URL
         // encode token for URL safety
-        const resetLink = `http://localhost:8080/reset-password/${encodeURIComponent(token)}`;
+        const resetLink = `${baseUrl}/reset-password/${encodeURIComponent(token)}`;
 
         // send reset email
         await sendMail(
