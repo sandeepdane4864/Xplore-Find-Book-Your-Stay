@@ -10,7 +10,7 @@ const passport = require("passport");
 const { userSchema } = require("../schema");
 const ExpressError = require("../utils/ExpressError");
 
-const { SaveReturnTo, alreadyLoggedIn, validateUser } = require("../middleware.js");
+const { SaveReturnTo, alreadyLoggedIn, validateUser } = require("../middlewares.js");
 
 const userControllers = require("../controllers/users.js");
 

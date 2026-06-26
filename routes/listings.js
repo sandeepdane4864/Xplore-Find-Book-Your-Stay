@@ -3,7 +3,7 @@ const router = express.Router({ mergeParams: true });
 const wrapAsync = require("../utils/wrapAsync");
 const upload = require("../config/multerListing.js");
 // fs is used to delete the image file from the server when a listing is deleted fs is file system
-const { IsloggedIn, SaveReturnTo, isOwner, isReviewAuthor, validateListing } = require("../middleware.js");
+const { IsloggedIn, SaveReturnTo, isOwner, isReviewAuthor, validateListing } = require("../middlewares.js");
 const listingControllers = require("../controllers/listings.js");
 const Listing = require("../models/listing.js")
 

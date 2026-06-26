@@ -3,28 +3,30 @@ const passportLocalMongoose = require("passport-local-mongoose").default;
 
 const userSchema = new mongoose.Schema({
 
+    googleId: {
+        type: String,
+        unique: true,
+        sparse: true   // important: allows null values
+    },
+
     firstName: {
         type: String,
-        required: true,
         trim: true
     },
 
     lastName: {
         type: String,
-        required: true,
         trim: true
     },
 
     username: {
         type: String,
-        required: true,
         unique: true,
         trim: true
     },
 
     email: {
         type: String,
-        required: true,
         unique: true,
         lowercase: true
     },
@@ -41,36 +43,29 @@ const userSchema = new mongoose.Schema({
     },
 
     phone_no: {
-        type: String,
-        required: true
+        type: String
     },
 
     gender: {
         type: String,
-        enum: ["Male", "Female", "Other"],
-        required: true
+        enum: ["Male", "Female", "Other"]
     },
 
     DOB: {
-        type: Date,
-        required: true
+        type: Date
     },
-
-    /* FORGOT PASSWORD FIELDS */
 
     resetToken: String,
     resetTokenExpire: Date
 
 }, { timestamps: true });
 
-
-// Virtual full name
+/* Virtual full name */
 userSchema.virtual("fullName").get(function () {
-    return `${this.firstName} ${this.lastName}`;
+    return `${this.firstName || ""} ${this.lastName || ""}`.trim();
 });
 
-
-// passport plugin
+/* Passport local plugin */
 userSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("User", userSchema);

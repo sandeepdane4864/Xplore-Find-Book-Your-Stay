@@ -6,7 +6,7 @@ const upload = require("../config/multerProfilePic");
 const ExpressError = require("../utils/ExpressError");
 const passport = require('passport');
 const User = require("../models/user");
-const { IsloggedIn } = require("../middleware.js");
+const { IsloggedIn } = require("../middlewares.js");
 const profileController = require("../controllers/profile.js")
 
 // Profile Page

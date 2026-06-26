@@ -15,6 +15,8 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const profileRoutes = require('./routes/profile');
+ require("./config/passport");
+
 
 // create mongo session
 const store = MongoStore.create({
@@ -70,6 +72,7 @@ const listingRoutes = require("./routes/listings");
 const userRoutes = require("./routes/users");
 const user = require("./models/user");
 const bookingsRoutes = require("./routes/bookings");
+const authRoutes = require("./routes/auth");
 
 // DATABASE CONNECTION
 const mongo_URL = process.env.ATLAS_URL;
@@ -108,6 +111,7 @@ app.use("/listings", listingRoutes);
 app.use("/", userRoutes);
 app.use("/", bookingsRoutes);
 app.use("/profile", profileRoutes);
+app.use("/auth", authRoutes);
 
 
 // 404 HANDLER
